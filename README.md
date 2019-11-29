@@ -4,11 +4,11 @@ A Rust library for controlling swaywm through its [IPC interface](https://github
 
 ## Usage
 
-Examples of how to use the library can be found [here](examples)
+Examples of how to use the library can be found [here](examples).
 
 ## Versioning
 
-This library targets the latest stable release of [sway](https://github.com/swaywm/sway)
+This library targets the latest stable release of [sway](https://github.com/swaywm/sway).
 
 ## Credits
 
