@@ -33,15 +33,11 @@ pub(crate) fn receive_from_stream(stream: &mut UnixStream) -> Fallible<(u32, Vec
     Ok((message_type, payload_data))
 }
 
-pub struct Connection {
-    stream: UnixStream,
-}
+pub struct Connection(UnixStream);
 
 impl Connection {
     pub fn new() -> Fallible<Self> {
-        Ok(Self {
-            stream: UnixStream::connect(socket::get_path()?)?,
-        })
+        Ok(Self(UnixStream::connect(socket::get_path()?)?))
     }
 
     pub fn run_command<T: AsRef<str>>(&mut self, command: T) -> Fallible<Vec<CommandOutcome>> {
@@ -61,7 +57,7 @@ impl Connection {
             .success,
             "failed to subscribe to events"
         );
-        Ok(EventIterator::new(self.stream))
+        Ok(EventIterator::new(self.0))
     }
 
     pub fn get_outputs(&mut self) -> Fallible<Vec<Output>> {

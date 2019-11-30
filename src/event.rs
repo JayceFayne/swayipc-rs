@@ -19,17 +19,15 @@ pub enum EventType {
     Input,
 }
 
-pub struct EventIterator {
-    stream: UnixStream,
-}
+pub struct EventIterator(UnixStream);
 
 impl EventIterator {
     pub(crate) fn new(stream: UnixStream) -> EventIterator {
-        Self { stream }
+        Self(stream)
     }
 
     fn receive_event(&mut self) -> Fallible<Event> {
-        let (event_type, payload) = receive_from_stream(&mut self.stream)?;
+        let (event_type, payload) = receive_from_stream(&mut self.0)?;
         Ok(
             // strip the highest order bit indicating it's an event
             match (event_type << 1) >> 1 {

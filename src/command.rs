@@ -78,7 +78,7 @@ impl Connection {
         bytes.write_u32::<LE>(len as u32)?;
         bytes.write_u32::<LE>(message_type.into())?;
         bytes.extend(payload);
-        self.stream.write_all(&bytes[..])?;
+        self.0.write_all(&bytes[..])?;
         Ok(())
     }
 
@@ -87,7 +87,7 @@ impl Connection {
         bytes.extend(MAGIC.iter());
         bytes.write_u32::<LE>(0)?;
         bytes.write_u32::<LE>(message_type.into())?;
-        self.stream.write_all(&bytes[..])?;
+        self.0.write_all(&bytes[..])?;
         Ok(())
     }
 
@@ -95,7 +95,7 @@ impl Connection {
         &mut self,
         command_type: CommandType,
     ) -> Fallible<T> {
-        let (message_type, payload) = receive_from_stream(&mut self.stream)?;
+        let (message_type, payload) = receive_from_stream(&mut self.0)?;
         ensure!(
             u32::from(command_type) == message_type,
             "did receive a message with another type than requested"
