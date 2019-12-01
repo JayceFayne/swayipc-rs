@@ -1,6 +1,6 @@
 [package]
 name = "hovered_window"
-version = "0.1.0"
+version = "1.0.0"
 authors = ["Rex Hackbro <rex.hackbro@mailbox.org>"]
 edition = "2018"
 

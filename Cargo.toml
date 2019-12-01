@@ -1,6 +1,6 @@
 [package]
 name = "swayipc"
-version = "2.0.0"
+version = "2.0.1"
 authors = ["Rex Hackbro <rex.hackbro@mailbox.org>"]
 edition = "2018"
 description = "A library for controlling sway through its IPC interface"
@@ -17,5 +17,5 @@ failure = "0.1.6"
 async-std = {version = "1.2.0", optional = true}
 
 [features]
-default = []
+default = ["async"]
 async = ["async-std"]
