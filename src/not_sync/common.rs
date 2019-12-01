@@ -13,10 +13,10 @@ pub(crate) async fn receive_from_stream(stream: &mut UnixStream) -> Fallible<(u3
     let mut payload_len_buf = [0_u8; 4];
     stream.read_exact(&mut payload_len_buf).await?;
     let payload_len = u32::from_ne_bytes(payload_len_buf);
-    let mut message_type_buf = [0_u8; 4];
-    stream.read_exact(&mut message_type_buf).await?;
-    let message_type = u32::from_ne_bytes(message_type_buf);
-    let mut payload_data = vec![0_u8; payload_len as usize];
-    stream.read_exact(&mut payload_data[..]).await?;
-    Ok((message_type, payload_data))
+    let mut reply_type_buf = [0_u8; 4];
+    stream.read_exact(&mut reply_type_buf).await?;
+    let reply_type = u32::from_ne_bytes(reply_type_buf);
+    let mut payload_buf = vec![0_u8; payload_len as usize];
+    stream.read_exact(&mut payload_buf).await?;
+    Ok((reply_type, payload_buf))
 }

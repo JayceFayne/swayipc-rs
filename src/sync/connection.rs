@@ -23,10 +23,13 @@ impl Connection {
         payload: Option<&str>,
     ) -> Fallible<D> {
         self.0.write_all(&command_type.encode(payload))?;
-        let (message_type, payload) = receive_from_stream(&mut self.0)?;
+        let (reply_type, payload) = receive_from_stream(&mut self.0)?;
+        let command_type = u32::from(command_type);
         ensure!(
-            u32::from(command_type) == message_type,
-            "did receive a reply with another type than requested"
+            command_type == reply_type,
+            "did receive a reply with type '{}' but send command with type '{}'",
+            reply_type,
+            command_type
         );
         Ok(from_slice(&payload)?)
     }
@@ -40,13 +43,12 @@ impl Connection {
     }
 
     pub fn subscribe(mut self, events: &[EventType]) -> Fallible<EventIterator> {
+        let events = serde_json::ser::to_string(events)?;
         ensure!(
-            self.raw_command::<Success>(
-                CommandType::Subscribe,
-                Some(&serde_json::ser::to_string(events)?)
-            )?
-            .success,
-            "failed to subscribe to events"
+            self.raw_command::<Success>(CommandType::Subscribe, Some(&events))?
+                .success,
+            "failed to subscribe to events '{}'",
+            events
         );
         Ok(EventIterator(self.0))
     }
