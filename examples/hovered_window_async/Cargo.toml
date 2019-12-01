@@ -1,8 +1,9 @@
 [package]
-name = "command_loop"
+name = "hovered_window_async"
 version = "1.0.0"
 authors = ["Rex Hackbro <rex.hackbro@mailbox.org>"]
 edition = "2018"
 
 [dependencies.swayipc]
 path = "../../"
+features = ["async"]

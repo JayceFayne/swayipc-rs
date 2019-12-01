@@ -101,14 +101,14 @@ fn get_config() -> Fallible<()> {
 #[test]
 fn send_tick() -> Fallible<()> {
     let success = Connection::new()?.send_tick("")?;
-    assert!(success);
+    ensure!(success);
     Ok(())
 }
 
 #[test]
 fn send_sync() -> Fallible<()> {
     let success = Connection::new()?.send_sync()?;
-    assert!(!success);
+    ensure!(!success, "sync should always return false");
     Ok(())
 }
 

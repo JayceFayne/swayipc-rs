@@ -1,5 +1,6 @@
 use crate::{bail, Fallible};
 use std::{env, process};
+//TODO: impl async as soon as async-std got an implementation for process
 
 pub(crate) fn get_path() -> Fallible<String> {
     if let Ok(sockpath) = env::var("SWAYSOCK") {
