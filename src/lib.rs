@@ -1,4 +1,3 @@
-#[macro_use]
 mod command;
 mod event;
 #[cfg(feature = "async")]
