@@ -1,9 +1,3 @@
-use crate::{ensure, receive_from_stream, Connection, Fallible, MAGIC};
-use byteorder::{WriteBytesExt, LE};
-use serde::de::DeserializeOwned;
-use serde_json::from_slice;
-use std::io::Write;
-
 #[derive(Debug, PartialEq, Copy, Clone)]
 pub(crate) enum CommandType {
     RunCommand,
@@ -65,58 +59,43 @@ impl From<u32> for CommandType {
     }
 }
 
-impl Connection {
-    pub(crate) fn send_raw_command_with_payload<P: AsRef<str>>(
-        &mut self,
-        message_type: CommandType,
-        payload: P,
-    ) -> Fallible<()> {
-        let payload = payload.as_ref().bytes();
-        let len = payload.len();
-        let mut bytes = Vec::with_capacity(14 + len);
-        bytes.extend(MAGIC.iter());
-        bytes.write_u32::<LE>(len as u32)?;
-        bytes.write_u32::<LE>(message_type.into())?;
-        bytes.extend(payload);
-        self.0.write_all(&bytes[..])?;
-        Ok(())
-    }
+pub(crate) struct Command<'a> {
+    pub command_type: CommandType,
+    pub payload: Option<&'a str>,
+}
 
-    pub(crate) fn send_raw_command(&mut self, message_type: CommandType) -> Fallible<()> {
-        let mut bytes = Vec::with_capacity(14);
-        bytes.extend(MAGIC.iter());
-        bytes.write_u32::<LE>(0)?;
-        bytes.write_u32::<LE>(message_type.into())?;
-        self.0.write_all(&bytes[..])?;
-        Ok(())
+impl Command<'_> {
+    pub fn encode(&self) -> Vec<u8> {
+        if let Some(payload) = self.payload {
+            let payload = payload.bytes();
+            let len = payload.len();
+            let mut bytes = Vec::with_capacity(14 + len);
+            bytes.extend(crate::MAGIC.iter());
+            bytes.extend(&(len as u32).to_ne_bytes());
+            bytes.extend(&u32::from(self.command_type).to_ne_bytes());
+            bytes.extend(payload);
+            bytes
+        } else {
+            let mut bytes = Vec::with_capacity(14);
+            bytes.extend(crate::MAGIC.iter());
+            bytes.extend(&0_u32.to_ne_bytes());
+            bytes.extend(&u32::from(self.command_type).to_ne_bytes());
+            bytes
+        }
     }
+}
 
-    pub(crate) fn receive_raw_command<T: DeserializeOwned>(
-        &mut self,
-        command_type: CommandType,
-    ) -> Fallible<T> {
-        let (message_type, payload) = receive_from_stream(&mut self.0)?;
-        ensure!(
-            u32::from(command_type) == message_type,
-            "did receive a message with another type than requested"
-        );
-        Ok(from_slice(&payload)?)
-    }
-
-    pub(crate) fn send_receive_raw_command_with_payload<T: DeserializeOwned, P: AsRef<str>>(
-        &mut self,
-        message_type: CommandType,
-        payload: P,
-    ) -> Fallible<T> {
-        self.send_raw_command_with_payload(message_type, payload)?;
-        Ok(self.receive_raw_command(message_type)?)
-    }
-
-    pub(crate) fn send_receive_raw_command<T: DeserializeOwned>(
-        &mut self,
-        message_type: CommandType,
-    ) -> Fallible<T> {
-        self.send_raw_command(message_type)?;
-        Ok(self.receive_raw_command(message_type)?)
-    }
+macro_rules! command_new {
+    ($t:expr) => {
+        Command {
+            command_type: $t,
+            payload: None,
+        }
+    };
+    ($t:expr, $p:expr) => {
+        Command {
+            command_type: $t,
+            payload: Some($p.as_ref()),
+        }
+    };
 }
