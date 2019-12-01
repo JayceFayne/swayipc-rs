@@ -4,9 +4,12 @@ fn main() -> Fallible<()> {
     block_on(async {
         let subs = [
             EventType::Workspace,
+            EventType::Input,
+            EventType::Tick,
             EventType::Shutdown,
             EventType::Mode,
             EventType::Window,
+            EventType::BarStateUpdate,
             EventType::BarConfigUpdate,
             EventType::Binding,
         ];

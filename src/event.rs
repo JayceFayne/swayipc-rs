@@ -33,9 +33,12 @@ impl TryFrom<(u32, Vec<u8>)> for Event {
                 5 => Event::Binding(from_slice(&payload)?),
                 6 => Event::Shutdown(from_slice(&payload)?),
                 7 => Event::Tick(from_slice(&payload)?),
-                14 => Event::BarStatusUpdate(from_slice(&payload)?),
-                15 => Event::Input(from_slice(&payload)?),
-                _ => bail!("received event {} we didnt't subscribed to", event_type),
+                20 => Event::BarStateUpdate(from_slice(&payload)?),
+                21 => Event::Input(from_slice(&payload)?),
+                _ => bail!(
+                    "received event {} we didnt't subscribed to",
+                    (event_type << 1) >> 1
+                ),
             },
         )
     }

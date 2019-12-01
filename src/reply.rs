@@ -1,5 +1,6 @@
 use serde_derive::Deserialize;
 //TODO: reduce execive use of option with serde flatten and extra struct while preserving semantics (e.g. BindingEvent)
+//TODO: add output_event (pull request in sway) since it is implemented but not documented
 
 #[derive(Debug, Deserialize)]
 pub struct CommandOutcome {
@@ -294,7 +295,7 @@ pub enum Event {
     Binding(BindingEvent),
     Shutdown(ShutdownEvent),
     Tick(TickEvent),
-    BarStatusUpdate(BarStatusUpdateEvent),
+    BarStateUpdate(BarStateUpdateEvent),
     Input(InputEvent),
 }
 
@@ -315,7 +316,7 @@ pub enum InputChange {
 }
 
 #[derive(Debug, Deserialize)]
-pub struct BarStatusUpdateEvent {
+pub struct BarStateUpdateEvent {
     pub id: String,
     pub visible_by_modifier: bool,
 }
