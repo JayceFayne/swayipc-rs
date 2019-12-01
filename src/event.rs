@@ -35,10 +35,7 @@ impl TryFrom<(u32, Vec<u8>)> for Event {
                 7 => Event::Tick(from_slice(&payload)?),
                 20 => Event::BarStateUpdate(from_slice(&payload)?),
                 21 => Event::Input(from_slice(&payload)?),
-                _ => bail!(
-                    "received event {} we didnt't subscribed to",
-                    (event_type << 1) >> 1
-                ),
+                _ => bail!("received unimplemented event '{}'", (event_type << 1) >> 1),
             },
         )
     }

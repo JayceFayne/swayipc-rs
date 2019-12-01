@@ -1,6 +1,5 @@
 use serde_derive::Deserialize;
 //TODO: reduce execive use of option with serde flatten and extra struct while preserving semantics (e.g. BindingEvent)
-//TODO: add output_event (pull request in sway) since it is implemented but not documented
 
 #[derive(Debug, Deserialize)]
 pub struct CommandOutcome {
