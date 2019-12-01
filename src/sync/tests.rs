@@ -134,7 +134,7 @@ fn event_subscribe_all() -> Fallible<()> {
         EventType::Binding,
         EventType::Shutdown,
         EventType::Tick,
-        //EventType::BarStatusUpdate, //FIXME: Fails for some reason :shrug:
+        EventType::BarStateUpdate,
         EventType::Input,
     ])?;
     Ok(())

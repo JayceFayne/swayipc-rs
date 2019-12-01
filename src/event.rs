@@ -15,7 +15,7 @@ pub enum EventType {
     Binding,
     Shutdown,
     Tick,
-    BarStatusUpdate,
+    BarStateUpdate,
     Input,
 }
 
