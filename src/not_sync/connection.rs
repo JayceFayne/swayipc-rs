@@ -38,13 +38,12 @@ impl Connection {
         &mut self,
         payload: T,
     ) -> Fallible<Vec<CommandOutcome>> {
-        Ok(self
-            .raw_command(CommandType::RunCommand, Some(payload.as_ref()))
-            .await?)
+        self.raw_command(CommandType::RunCommand, Some(payload.as_ref()))
+            .await
     }
 
     pub async fn get_workspaces(&mut self) -> Fallible<Vec<Workspace>> {
-        Ok(self.raw_command(CommandType::GetWorkspaces, None).await?)
+        self.raw_command(CommandType::GetWorkspaces, None).await
     }
 
     pub async fn subscribe(mut self, events: &[EventType]) -> Fallible<EventIterator> {
@@ -60,37 +59,36 @@ impl Connection {
     }
 
     pub async fn get_outputs(&mut self) -> Fallible<Vec<Output>> {
-        Ok(self.raw_command(CommandType::GetOutputs, None).await?)
+        self.raw_command(CommandType::GetOutputs, None).await
     }
 
     pub async fn get_tree(&mut self) -> Fallible<Node> {
-        Ok(self.raw_command(CommandType::GetTree, None).await?)
+        self.raw_command(CommandType::GetTree, None).await
     }
 
     pub async fn get_marks(&mut self) -> Fallible<Vec<String>> {
-        Ok(self.raw_command(CommandType::GetMarks, None).await?)
+        self.raw_command(CommandType::GetMarks, None).await
     }
 
     pub async fn get_bar_ids(&mut self) -> Fallible<Vec<String>> {
-        Ok(self.raw_command(CommandType::GetBarConfig, None).await?)
+        self.raw_command(CommandType::GetBarConfig, None).await
     }
 
     pub async fn get_bar_config<T: AsRef<str>>(&mut self, id: T) -> Fallible<BarConfig> {
-        Ok(self
-            .raw_command(CommandType::GetBarConfig, Some(id.as_ref()))
-            .await?)
+        self.raw_command(CommandType::GetBarConfig, Some(id.as_ref()))
+            .await
     }
 
     pub async fn get_version(&mut self) -> Fallible<Version> {
-        Ok(self.raw_command(CommandType::GetVersion, None).await?)
+        self.raw_command(CommandType::GetVersion, None).await
     }
 
     pub async fn get_binding_modes(&mut self) -> Fallible<Vec<String>> {
-        Ok(self.raw_command(CommandType::GetBindingModes, None).await?)
+        self.raw_command(CommandType::GetBindingModes, None).await
     }
 
     pub async fn get_config(&mut self) -> Fallible<Config> {
-        Ok(self.raw_command(CommandType::GetConfig, None).await?)
+        self.raw_command(CommandType::GetConfig, None).await
     }
 
     pub async fn send_tick<T: AsRef<str>>(&mut self, payload: T) -> Fallible<bool> {
@@ -108,10 +106,10 @@ impl Connection {
     }
 
     pub async fn get_inputs(&mut self) -> Fallible<Vec<Input>> {
-        Ok(self.raw_command(CommandType::GetInputs, None).await?)
+        self.raw_command(CommandType::GetInputs, None).await
     }
 
     pub async fn get_seats(&mut self) -> Fallible<Vec<Seat>> {
-        Ok(self.raw_command(CommandType::GetSeats, None).await?)
+        self.raw_command(CommandType::GetSeats, None).await
     }
 }

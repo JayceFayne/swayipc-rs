@@ -35,11 +35,11 @@ impl Connection {
     }
 
     pub fn run_command<T: AsRef<str>>(&mut self, payload: T) -> Fallible<Vec<CommandOutcome>> {
-        Ok(self.raw_command(CommandType::RunCommand, Some(payload.as_ref()))?)
+        self.raw_command(CommandType::RunCommand, Some(payload.as_ref()))
     }
 
     pub fn get_workspaces(&mut self) -> Fallible<Vec<Workspace>> {
-        Ok(self.raw_command(CommandType::GetWorkspaces, None)?)
+        self.raw_command(CommandType::GetWorkspaces, None)
     }
 
     pub fn subscribe(mut self, events: &[EventType]) -> Fallible<EventIterator> {
@@ -54,35 +54,35 @@ impl Connection {
     }
 
     pub fn get_outputs(&mut self) -> Fallible<Vec<Output>> {
-        Ok(self.raw_command(CommandType::GetOutputs, None)?)
+        self.raw_command(CommandType::GetOutputs, None)
     }
 
     pub fn get_tree(&mut self) -> Fallible<Node> {
-        Ok(self.raw_command(CommandType::GetTree, None)?)
+        self.raw_command(CommandType::GetTree, None)
     }
 
     pub fn get_marks(&mut self) -> Fallible<Vec<String>> {
-        Ok(self.raw_command(CommandType::GetMarks, None)?)
+        self.raw_command(CommandType::GetMarks, None)
     }
 
     pub fn get_bar_ids(&mut self) -> Fallible<Vec<String>> {
-        Ok(self.raw_command(CommandType::GetBarConfig, None)?)
+        self.raw_command(CommandType::GetBarConfig, None)
     }
 
     pub fn get_bar_config<T: AsRef<str>>(&mut self, id: T) -> Fallible<BarConfig> {
-        Ok(self.raw_command(CommandType::GetBarConfig, Some(id.as_ref()))?)
+        self.raw_command(CommandType::GetBarConfig, Some(id.as_ref()))
     }
 
     pub fn get_version(&mut self) -> Fallible<Version> {
-        Ok(self.raw_command(CommandType::GetVersion, None)?)
+        self.raw_command(CommandType::GetVersion, None)
     }
 
     pub fn get_binding_modes(&mut self) -> Fallible<Vec<String>> {
-        Ok(self.raw_command(CommandType::GetBindingModes, None)?)
+        self.raw_command(CommandType::GetBindingModes, None)
     }
 
     pub fn get_config(&mut self) -> Fallible<Config> {
-        Ok(self.raw_command(CommandType::GetConfig, None)?)
+        self.raw_command(CommandType::GetConfig, None)
     }
 
     pub fn send_tick<T: AsRef<str>>(&mut self, payload: T) -> Fallible<bool> {
@@ -98,10 +98,10 @@ impl Connection {
     }
 
     pub fn get_inputs(&mut self) -> Fallible<Vec<Input>> {
-        Ok(self.raw_command(CommandType::GetInputs, None)?)
+        self.raw_command(CommandType::GetInputs, None)
     }
 
     pub fn get_seats(&mut self) -> Fallible<Vec<Seat>> {
-        Ok(self.raw_command(CommandType::GetSeats, None)?)
+        self.raw_command(CommandType::GetSeats, None)
     }
 }
