@@ -77,7 +77,6 @@ pub enum SendEvents {
 
 #[derive(Debug, PartialEq, Deserialize)]
 #[serde(rename_all = "lowercase")]
-//TODO: Implement this as bool with custom Serializer
 pub enum EnabledOrDisabled {
     Enabled,
     Disabled,
