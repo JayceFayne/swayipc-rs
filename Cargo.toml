@@ -1,6 +1,6 @@
 [package]
 name = "swayipc"
-version = "2.2.3"
+version = "2.2.4"
 authors = ["Rex Hackbro <rex.hackbro@mailbox.org>"]
 edition = "2018"
 description = "A library for controlling sway through its IPC interface"
@@ -12,7 +12,7 @@ readme = "README.md"
 [dependencies]
 serde = "1.0.103"
 serde_derive = "1.0.103"
-serde_json = "1.0.42"
+serde_json = "1.0.44"
 failure = "0.1.6"
 async-std = { version = "1.2.0", optional = true }
 
