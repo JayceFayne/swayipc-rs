@@ -93,7 +93,8 @@ pub enum ClickMethod {
 #[derive(Debug, PartialEq, Deserialize)]
 #[serde(rename_all = "snake_case")]
 pub enum ScrollMethod {
-    TwoFingerEdge,
+    TwoFinger,
+    Edge,
     OnButtonDown,
     None,
 }
