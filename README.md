@@ -17,6 +17,10 @@ Examples of how to use the library can be found [here](examples).
 
 This library targets the latest stable release of [sway](https://github.com/swaywm/sway).
 
+## Contributing
+
+ If you find any errors in swayipc-rs or just want to add a new feature feel free to [submit a PR](https://github.com/jaycefayne/swayipc-rs/pulls).
+
 ## Credits
 
 - [Trevor Merrifield](https://github.com/stapelberg) for his awesome work implementing the i3ipc protocol in [go](https://github.com/i3/go-i3).
