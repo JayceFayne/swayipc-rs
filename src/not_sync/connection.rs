@@ -1,8 +1,6 @@
 use super::common::receive_from_stream;
-use crate::command::CommandType;
-use crate::reply::{
-    BarConfig, CommandOutcome, Config, Input, Node, Output, Seat, Success, Version, Workspace,
-};
+use crate::command::*;
+use crate::reply::*;
 use crate::socket::get_path;
 use crate::{ensure, EventIterator, EventType, Fallible};
 use async_std::io::prelude::WriteExt;
@@ -38,18 +36,17 @@ impl Connection {
         &mut self,
         payload: T,
     ) -> Fallible<Vec<CommandOutcome>> {
-        self.raw_command(CommandType::RunCommand, Some(payload.as_ref()))
-            .await
+        self.raw_command(RunCommand, Some(payload.as_ref())).await
     }
 
     pub async fn get_workspaces(&mut self) -> Fallible<Vec<Workspace>> {
-        self.raw_command(CommandType::GetWorkspaces, None).await
+        self.raw_command(GetWorkspaces, None).await
     }
 
     pub async fn subscribe(mut self, events: &[EventType]) -> Fallible<EventIterator> {
         let events = serde_json::ser::to_string(events)?;
         ensure!(
-            self.raw_command::<Success>(CommandType::Subscribe, Some(&events))
+            self.raw_command::<Success>(Subscribe, Some(&events))
                 .await?
                 .success,
             "failed to subscribe to events '{}'",
@@ -59,57 +56,53 @@ impl Connection {
     }
 
     pub async fn get_outputs(&mut self) -> Fallible<Vec<Output>> {
-        self.raw_command(CommandType::GetOutputs, None).await
+        self.raw_command(GetOutputs, None).await
     }
 
     pub async fn get_tree(&mut self) -> Fallible<Node> {
-        self.raw_command(CommandType::GetTree, None).await
+        self.raw_command(GetTree, None).await
     }
 
     pub async fn get_marks(&mut self) -> Fallible<Vec<String>> {
-        self.raw_command(CommandType::GetMarks, None).await
+        self.raw_command(GetMarks, None).await
     }
 
     pub async fn get_bar_ids(&mut self) -> Fallible<Vec<String>> {
-        self.raw_command(CommandType::GetBarConfig, None).await
+        self.raw_command(GetBarConfig, None).await
     }
 
     pub async fn get_bar_config<T: AsRef<str>>(&mut self, id: T) -> Fallible<BarConfig> {
-        self.raw_command(CommandType::GetBarConfig, Some(id.as_ref()))
-            .await
+        self.raw_command(GetBarConfig, Some(id.as_ref())).await
     }
 
     pub async fn get_version(&mut self) -> Fallible<Version> {
-        self.raw_command(CommandType::GetVersion, None).await
+        self.raw_command(GetVersion, None).await
     }
 
     pub async fn get_binding_modes(&mut self) -> Fallible<Vec<String>> {
-        self.raw_command(CommandType::GetBindingModes, None).await
+        self.raw_command(GetBindingModes, None).await
     }
 
     pub async fn get_config(&mut self) -> Fallible<Config> {
-        self.raw_command(CommandType::GetConfig, None).await
+        self.raw_command(GetConfig, None).await
     }
 
     pub async fn send_tick<T: AsRef<str>>(&mut self, payload: T) -> Fallible<bool> {
         Ok(self
-            .raw_command::<Success>(CommandType::SendTick, Some(payload.as_ref()))
+            .raw_command::<Success>(SendTick, Some(payload.as_ref()))
             .await?
             .success)
     }
 
     pub async fn send_sync(&mut self) -> Fallible<bool> {
-        Ok(self
-            .raw_command::<Success>(CommandType::Sync, None)
-            .await?
-            .success)
+        Ok(self.raw_command::<Success>(Sync, None).await?.success)
     }
 
     pub async fn get_inputs(&mut self) -> Fallible<Vec<Input>> {
-        self.raw_command(CommandType::GetInputs, None).await
+        self.raw_command(GetInputs, None).await
     }
 
     pub async fn get_seats(&mut self) -> Fallible<Vec<Seat>> {
-        self.raw_command(CommandType::GetSeats, None).await
+        self.raw_command(GetSeats, None).await
     }
 }

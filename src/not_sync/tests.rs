@@ -14,7 +14,7 @@ fn run_command_nothing() -> Fallible<()> {
     block_on(async {
         let mut connection = Connection::new().await?;
         let result = connection.run_command("").await?;
-        ensure!(result.len() == 0);
+        ensure!(result.is_empty());
         Ok(())
     })
 }
