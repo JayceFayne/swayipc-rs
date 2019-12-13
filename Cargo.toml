@@ -1,11 +1,12 @@
 [package]
 name = "swayipc"
-version = "2.2.5"
+version = "2.2.6"
 authors = ["Jayce Fayne <jayce.fayne@mailbox.org>"]
 edition = "2018"
 description = "A library for controlling sway through its IPC interface"
 license = "MIT"
 repository = "https://github.com/jaycefayne/swayipc-rs"
+categories = ["asynchronous", "concurrency", "network-programming"]
 keywords = ["sway", "swaywm", "swayipc","ipc", "async"]
 readme = "README.md"
 
