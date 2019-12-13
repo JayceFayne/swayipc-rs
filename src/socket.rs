@@ -20,7 +20,7 @@ pub(crate) fn get_path() -> Fallible<String> {
         "sway --get-socketpath didn't return with exit code 0".to_owned()
     };
     bail!(if output.stderr.is_empty() {
-        prefix.to_owned()
+        prefix
     } else {
         format!("{}. stderr: {:?}", prefix, output.stderr)
     })

@@ -287,15 +287,15 @@ pub struct Config {
 
 #[derive(Debug, Deserialize)]
 pub enum Event {
-    Workspace(WorkspaceEvent),
+    Workspace(Box<WorkspaceEvent>),
     Mode(ModeEvent),
-    Window(WindowEvent),
-    BarConfigUpdate(BarConfig),
+    Window(Box<WindowEvent>),
+    BarConfigUpdate(Box<BarConfig>),
     Binding(BindingEvent),
     Shutdown(ShutdownEvent),
     Tick(TickEvent),
     BarStateUpdate(BarStateUpdateEvent),
-    Input(InputEvent),
+    Input(Box<InputEvent>),
 }
 
 #[derive(Debug, Deserialize)]

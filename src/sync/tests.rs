@@ -10,7 +10,7 @@ fn connect() -> Fallible<()> {
 fn run_command_nothing() -> Fallible<()> {
     let mut connection = Connection::new()?;
     let result = connection.run_command("")?;
-    ensure!(result.len() == 0);
+    ensure!(result.is_empty());
     Ok(())
 }
 
