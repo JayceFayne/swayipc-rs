@@ -1,7 +1,7 @@
 [package]
 name = "hovered_window"
 version = "1.0.0"
-authors = ["Rex Hackbro <rex.hackbro@mailbox.org>"]
+authors = ["Jayce Fayne <jayce.fayne@mailbox.org>"]
 edition = "2018"
 
 [dependencies.swayipc]
