@@ -2,7 +2,7 @@
 
 A Rust library for controlling swaywm through its [IPC interface](https://github.com/swaywm/sway/blob/master/sway/sway-ipc.7.scd).
 This library can be used  in either a synchronous or asynchronous manner.
-The async feature can be enabled be adding the following to your Cargo.toml:
+The async feature can be enabled by adding the following to your Cargo.toml:
 
 ```toml
 [dependencies.swayipc]
@@ -23,6 +23,6 @@ This library targets the latest stable release of [sway](https://github.com/sway
 
 ## Credits
 
-- [Trevor Merrifield](https://github.com/stapelberg) for his awesome work implementing the i3ipc protocol in [go](https://github.com/i3/go-i3).
-- [Michael Stapelberg](https://github.com/tmerr) for his awesome work implementing the i3ipc protocol in [rust](https://github.com/tmerr/i3ipc-rs).
-- And ofc [Drew DeVault](https://github.com/tmerr) and all the sway contributors for creating sway.
+- [Michael Stapelberg](https://github.com/stapelberg) for his awesome work implementing the i3ipc protocol in [go](https://github.com/i3/go-i3).
+- [Trevor Merrifield](https://github.com/tmerr) for his awesome work implementing the i3ipc protocol in [rust](https://github.com/tmerr/i3ipc-rs).
+- And ofc [Drew DeVault](https://github.com/ddevault) and all the sway contributors for creating sway.
