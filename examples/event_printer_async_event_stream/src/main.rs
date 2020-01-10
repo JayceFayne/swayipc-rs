@@ -1,5 +1,5 @@
+use swayipc::async_std::stream::StreamExt;
 use swayipc::{block_on, Connection, EventType, Fallible};
-use async_std::stream::StreamExt;
 
 fn main() -> Fallible<()> {
     block_on(async {
