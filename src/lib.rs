@@ -14,7 +14,11 @@ pub use failure::{bail, ensure, Error, Fallible};
 #[cfg(feature = "async")]
 pub use async_std::{self, task::block_on};
 #[cfg(feature = "async")]
+#[cfg(not(feature = "event_stream"))]
 pub use not_sync::{Connection, EventIterator};
+#[cfg(feature = "async")]
+#[cfg(feature = "event_stream")]
+pub use not_sync::{Connection, EventStream};
 #[cfg(not(feature = "async"))]
 pub use sync::{Connection, EventIterator};
 

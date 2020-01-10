@@ -2,7 +2,11 @@ use super::common::receive_from_stream;
 use crate::command::*;
 use crate::reply::*;
 use crate::socket::get_path;
-use crate::{ensure, EventIterator, EventType, Fallible};
+#[cfg(not(feature = "event_stream"))]
+use crate::EventIterator;
+#[cfg(feature = "event_stream")]
+use crate::EventStream;
+use crate::{ensure, EventType, Fallible};
 use async_std::io::prelude::WriteExt;
 use async_std::os::unix::net::UnixStream;
 use serde::de::DeserializeOwned as Deserialize;
@@ -43,6 +47,7 @@ impl Connection {
         self.raw_command(GetWorkspaces, None).await
     }
 
+    #[cfg(not(feature = "event_stream"))]
     pub async fn subscribe(mut self, events: &[EventType]) -> Fallible<EventIterator> {
         let events = serde_json::ser::to_string(events)?;
         ensure!(
@@ -53,6 +58,19 @@ impl Connection {
             events
         );
         Ok(EventIterator(self.0))
+    }
+
+    #[cfg(feature = "event_stream")]
+    pub async fn subscribe(mut self, events: &[EventType]) -> Fallible<EventStream> {
+        let events = serde_json::ser::to_string(events)?;
+        ensure!(
+            self.raw_command::<Success>(Subscribe, Some(&events))
+                .await?
+                .success,
+            "failed to subscribe to events '{}'",
+            events
+        );
+        Ok(EventStream::new(self.0))
     }
 
     pub async fn get_outputs(&mut self) -> Fallible<Vec<Output>> {
