@@ -6,4 +6,4 @@ edition = "2018"
 
 [dependencies.swayipc]
 path = "../../"
-features = ["async"]
+features = ["async", "event_stream"]
