@@ -16,12 +16,13 @@ serde_derive = "1.0.104"
 serde_json = "1.0.44"
 failure = "0.1.6"
 futures-core = { version = "0.3.1", optional = true }
-async-std = { version = "1.4.0", optional = true }
+futures-util = { version = "0.3.1", optional = true }
+async-std = { version = "1.4.0", features = ["attributes"], optional = true }
 
 [features]
 default = []
 async = ["async-std"]
-event_stream = ["futures-core"]
+event_stream = ["futures-core", "futures-util"]
 
 [[example]]
 name = "command_loop"
@@ -37,14 +38,9 @@ name = "event_printer"
 path = "examples/event_printer/src/main.rs"
 
 [[example]]
-name = "event_printer_async_event_stream"
-path = "examples/event_printer_async_event_stream/src/main.rs"
-required-features = ["async", "event_stream"]
-
-[[example]]
 name = "event_printer_async"
 path = "examples/event_printer_async/src/main.rs"
-required-features = ["async"]
+required-features = ["async", "event_stream"]
 
 [[example]]
 name = "hovered_window"
@@ -53,4 +49,4 @@ path = "examples/hovered_window/src/main.rs"
 [[example]]
 name = "hovered_window_async"
 path = "examples/hovered_window_async/src/main.rs"
-required-features = ["async"]
+required-features = ["async", "event_stream"]

@@ -61,7 +61,7 @@ impl Connection {
     }
 
     #[cfg(feature = "event_stream")]
-    pub async fn subscribe(mut self, events: &[EventType]) -> Fallible<EventStream> {
+    pub async fn subscribe(mut self, events: &[EventType]) -> Fallible<EventStream<'_>> {
         let events = serde_json::ser::to_string(events)?;
         ensure!(
             self.raw_command::<Success>(Subscribe, Some(&events))
