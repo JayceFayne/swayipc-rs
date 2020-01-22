@@ -23,30 +23,3 @@ async-std = { version = "1.4.0", features = ["attributes"], optional = true }
 default = []
 async = ["async-std"]
 event_stream = ["futures-core", "futures-util"]
-
-[[example]]
-name = "command_loop"
-path = "examples/command_loop/src/main.rs"
-
-[[example]]
-name = "command_loop_async"
-path = "examples/command_loop_async/src/main.rs"
-required-features = ["async"]
-
-[[example]]
-name = "event_printer"
-path = "examples/event_printer/src/main.rs"
-
-[[example]]
-name = "event_printer_async"
-path = "examples/event_printer_async/src/main.rs"
-required-features = ["async", "event_stream"]
-
-[[example]]
-name = "hovered_window"
-path = "examples/hovered_window/src/main.rs"
-
-[[example]]
-name = "hovered_window_async"
-path = "examples/hovered_window_async/src/main.rs"
-required-features = ["async", "event_stream"]

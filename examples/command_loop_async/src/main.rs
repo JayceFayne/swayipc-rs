@@ -1,3 +1,4 @@
+use swayipc::async_std;
 use swayipc::async_std::io::prelude::WriteExt;
 use swayipc::async_std::io::{stdin, stdout};
 use swayipc::{Connection, Fallible};
