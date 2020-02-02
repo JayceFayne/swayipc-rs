@@ -7,7 +7,7 @@ use std::convert::TryFrom;
 pub struct EventIterator(pub(crate) UnixStream);
 
 impl EventIterator {
-    #[deprecated(note="please use the `event_stream` feature instead")]
+    #[deprecated(note="use the `event_stream` feature instead")]
     pub async fn next(&mut self) -> Fallible<Event> {
         Event::try_from(receive_from_stream(&mut self.0).await?)
     }

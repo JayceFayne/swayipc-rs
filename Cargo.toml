@@ -20,6 +20,5 @@ futures-util = { version = "0.3.1", optional = true }
 async-std = { version = "1.4.0", features = ["attributes"], optional = true }
 
 [features]
-default = []
 async = ["async-std"]
 event_stream = ["futures-core", "futures-util"]

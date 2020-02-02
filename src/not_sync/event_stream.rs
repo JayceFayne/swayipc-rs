@@ -6,46 +6,32 @@ use futures_core::future::BoxFuture;
 use futures_core::ready;
 use futures_core::stream::Stream;
 use futures_util::FutureExt;
-use std::cell::UnsafeCell;
 use std::convert::TryFrom;
 use std::pin::Pin;
 use std::task::{Context, Poll};
 
-pub struct EventStream<'a> {
-    stream: UnsafeCell<UnixStream>,
-    state: Option<BoxFuture<'a, Fallible<(u32, Vec<u8>)>>>,
+pub struct EventStream(BoxFuture<'static, (UnixStream, Fallible<(u32, Vec<u8>)>)>);
+
+async fn receive(mut stream: UnixStream) -> (UnixStream, Fallible<(u32, Vec<u8>)>) {
+    let data = receive_from_stream(&mut stream).await;
+    (stream, data)
 }
 
-impl EventStream<'_> {
+impl EventStream {
     pub(crate) fn new(stream: UnixStream) -> Self {
-        Self {
-            stream: UnsafeCell::new(stream),
-            state: None,
-        }
-    }
-
-    fn queue_next_event(&mut self) {
-        self.state = Some(receive_from_stream(unsafe { &mut *self.stream.get() }).boxed())
+        Self(receive(stream).boxed())
     }
 }
 
-impl Stream for EventStream<'_> {
+impl Stream for EventStream {
     type Item = Fallible<Event>;
 
     fn poll_next(mut self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Option<Self::Item>> {
-        match &mut self.state {
-            Some(fut) => {
-                let res = ready!(fut.as_mut().poll(cx));
-                self.queue_next_event();
-                Poll::Ready(Some(match res {
-                    Err(err) => Err(err),
-                    Ok(raw_event) => Event::try_from(raw_event),
-                }))
-            }
-            None => {
-                self.queue_next_event();
-                Poll::Pending
-            }
-        }
+        let (stream, res) = ready!(self.0.as_mut().poll(cx));
+        self.0 = receive(stream).boxed();
+        Poll::Ready(Some(match res {
+            Err(err) => Err(err),
+            Ok(raw_event) => Event::try_from(raw_event),
+        }))
     }
 }
