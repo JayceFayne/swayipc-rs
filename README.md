@@ -1,4 +1,4 @@
-# swayipc-rs
+# swayipc
 
 A Rust library for controlling swaywm through its [IPC interface](https://github.com/swaywm/sway/blob/master/sway/sway-ipc.7.scd).
 This library can be used  in either a synchronous or asynchronous manner.
