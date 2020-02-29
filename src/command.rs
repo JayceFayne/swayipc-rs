@@ -1,41 +1,27 @@
 pub(crate) use CommandType::*;
 
+#[repr(u32)]
 #[derive(Debug, PartialEq, Copy, Clone)]
 pub(crate) enum CommandType {
-    RunCommand,
-    GetWorkspaces,
-    Subscribe,
-    GetOutputs,
-    GetTree,
-    GetMarks,
-    GetBarConfig,
-    GetVersion,
-    GetBindingModes,
-    GetConfig,
-    SendTick,
-    Sync,
-    GetInputs,
-    GetSeats,
+    RunCommand = 0,
+    GetWorkspaces = 1,
+    Subscribe = 2,
+    GetOutputs = 3,
+    GetTree = 4,
+    GetMarks = 5,
+    GetBarConfig = 6,
+    GetVersion = 7,
+    GetBindingModes = 8,
+    GetConfig = 9,
+    SendTick = 10,
+    Sync = 11,
+    GetInputs = 100,
+    GetSeats = 101,
 }
 
 impl From<CommandType> for u32 {
     fn from(value: CommandType) -> Self {
-        match value {
-            RunCommand => 0,
-            GetWorkspaces => 1,
-            Subscribe => 2,
-            GetOutputs => 3,
-            GetTree => 4,
-            GetMarks => 5,
-            GetBarConfig => 6,
-            GetVersion => 7,
-            GetBindingModes => 8,
-            GetConfig => 9,
-            SendTick => 10,
-            Sync => 11,
-            GetInputs => 100,
-            GetSeats => 101,
-        }
+        value as u32
     }
 }
 
