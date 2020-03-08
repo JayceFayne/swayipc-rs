@@ -4,7 +4,7 @@ use serde_derive::Serialize;
 use serde_json::from_slice;
 use std::convert::TryFrom;
 
-#[derive(Debug, Serialize)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, Debug, Serialize)]
 #[serde(rename_all = "snake_case")]
 pub enum EventType {
     Workspace,
