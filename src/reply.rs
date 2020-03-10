@@ -1,5 +1,4 @@
 use serde_derive::Deserialize;
-//TODO: reduce execive use of option with serde flatten and extra struct while preserving semantics (e.g. BindingEvent)
 
 #[derive(Debug, Deserialize)]
 pub struct CommandOutcome {
@@ -11,9 +10,12 @@ pub struct CommandOutcome {
 pub struct Workspace {
     pub num: i32,
     pub name: String,
+    pub layout: String,
     pub visible: bool,
     pub focused: bool,
     pub urgent: bool,
+    pub representation: String,
+    pub orientation: String,
     pub rect: Rect,
     pub output: String,
 }
@@ -114,7 +116,7 @@ pub struct Input {
     pub product: i32,
     #[serde(rename = "type")]
     pub input_type: String,
-    pub xkb_active_layout_name: Option<String>, //TODO: implement this with custom logic since this is only None if its not a keyboard
+    pub xkb_active_layout_name: Option<String>,
     #[serde(default)]
     pub xkb_layout_names: Vec<String>,
     pub xkb_active_layout_name_index: Option<u32>,
@@ -196,9 +198,10 @@ pub struct Node {
     pub focus: Vec<i64>,
     #[serde(default)]
     pub nodes: Vec<Node>,
-    #[serde(default)]
     pub floating_nodes: Vec<Node>,
+    pub sticky: bool,
     pub representation: Option<String>,
+    pub fullscreen_mode: Option<u8>,
     pub app_id: Option<String>,
     pub pid: Option<i32>,
     pub window: Option<i32>,
