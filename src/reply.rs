@@ -1,4 +1,4 @@
-use serde_derive::Deserialize;
+use serde::{Deserializer, Deserialize};
 
 #[derive(Debug, Deserialize)]
 pub struct CommandOutcome {
@@ -14,11 +14,19 @@ pub struct Workspace {
     pub visible: bool,
     pub focused: bool,
     pub urgent: bool,
+    #[serde(deserialize_with = "default_on_null")]
     pub representation: String,
     pub orientation: String,
     pub rect: Rect,
     pub output: String,
     pub focus: Vec<u32>,
+}
+
+fn default_on_null<'de, D, T: Default + Deserialize<'de>>(deserializer: D) -> Result<T, D::Error>
+    where D: Deserializer<'de>
+{
+    let opt = Option::deserialize(deserializer)?;
+    Ok(opt.unwrap_or_default())
 }
 
 #[derive(Debug, Deserialize)]

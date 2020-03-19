@@ -1,6 +1,6 @@
 use crate::reply::Event;
 use crate::{bail, Error};
-use serde_derive::Serialize;
+use serde::Serialize;
 use serde_json::from_slice;
 use std::convert::TryFrom;
 
