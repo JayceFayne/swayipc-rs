@@ -11,10 +11,10 @@ keywords = ["sway", "swaywm", "swayipc","ipc", "async"]
 readme = "README.md"
 
 [dependencies]
-serde = "1.0.104"
+serde = "1.0"
 serde_derive = "1.0"
 serde_json = "1.0"
-failure = "0.1.6"
+failure = "0.1"
 futures-core = { version = "0.3", optional = true }
 futures-util = { version = "0.3", optional = true }
 async-std = { version = "1.5", features = ["attributes"], optional = true }
