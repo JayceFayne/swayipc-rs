@@ -18,7 +18,7 @@ pub struct Workspace {
     pub orientation: String,
     pub rect: Rect,
     pub output: String,
-    pub focus: Vec<u32>
+    pub focus: Vec<u32>,
 }
 
 #[derive(Debug, Deserialize)]
