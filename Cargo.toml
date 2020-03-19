@@ -1,6 +1,6 @@
 [package]
 name = "swayipc"
-version = "2.4.3"
+version = "2.4.4"
 authors = ["Jayce Fayne <jayce.fayne@mailbox.org>"]
 edition = "2018"
 description = "A library for controlling sway through its IPC interface"
