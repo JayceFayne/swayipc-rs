@@ -29,9 +29,6 @@ impl Stream for EventStream {
     fn poll_next(mut self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Option<Self::Item>> {
         let (stream, res) = ready!(self.0.as_mut().poll(cx));
         self.0 = receive(stream).boxed();
-        Poll::Ready(Some(match res {
-            Err(err) => Err(err),
-            Ok(raw_event) => Event::try_from(raw_event),
-        }))
+        Poll::Ready(Some(res.and_then(Event::try_from)))
     }
 }
