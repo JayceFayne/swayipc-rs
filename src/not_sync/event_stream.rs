@@ -5,7 +5,6 @@ use async_std::os::unix::net::UnixStream;
 use futures_core::future::BoxFuture;
 use futures_core::ready;
 use futures_core::stream::Stream;
-use futures_util::FutureExt;
 use std::convert::TryFrom;
 use std::pin::Pin;
 use std::task::{Context, Poll};
@@ -19,7 +18,7 @@ async fn receive(mut stream: UnixStream) -> (UnixStream, Fallible<(u32, Vec<u8>)
 
 impl EventStream {
     pub(crate) fn new(stream: UnixStream) -> Self {
-        Self(receive(stream).boxed())
+        Self(Box::pin(receive(stream)))
     }
 }
 
@@ -28,7 +27,7 @@ impl Stream for EventStream {
 
     fn poll_next(mut self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Option<Self::Item>> {
         let (stream, res) = ready!(self.0.as_mut().poll(cx));
-        self.0 = receive(stream).boxed();
+        self.0 = Box::pin(receive(stream));
         Poll::Ready(Some(res.and_then(Event::try_from)))
     }
 }
