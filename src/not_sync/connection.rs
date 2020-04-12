@@ -124,3 +124,9 @@ impl Connection {
         self.raw_command(GetSeats, None).await
     }
 }
+
+impl From<UnixStream> for Connection {
+    fn from(unix_stream: UnixStream) -> Self {
+        Self(unix_stream)
+    }
+}
