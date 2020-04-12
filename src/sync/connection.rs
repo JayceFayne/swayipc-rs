@@ -107,3 +107,9 @@ impl From<UnixStream> for Connection {
         Self(unix_stream)
     }
 }
+
+impl From<Connection> for UnixStream {
+    fn from(connection: Connection) -> Self {
+        connection.0
+    }
+}
