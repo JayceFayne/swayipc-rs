@@ -10,9 +10,6 @@ impl Iterator for EventIterator {
     type Item = Fallible<Event>;
 
     fn next(&mut self) -> Option<Self::Item> {
-        Some(match receive_from_stream(&mut self.0) {
-            Ok(v) => Event::try_from(v),
-            Err(e) => Err(e),
-        })
+        Some(receive_from_stream(&mut self.0).and_then(Event::try_from))
     }
 }
