@@ -1,5 +1,4 @@
-use swayipc::async_std;
-use swayipc::async_std::stream::StreamExt;
+use async_std::stream::StreamExt;
 use swayipc::{Connection, EventType, Fallible};
 
 #[async_std::main]
