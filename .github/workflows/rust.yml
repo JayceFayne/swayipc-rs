@@ -8,6 +8,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Build
-        run: |
-          cargo build --release --verbose
-          cargo build --release --verbose --features "async,event_stream"
+        run: cargo build --release --verbose
+      - name: Build with async features
+        run: cargo build --release --verbose --features "async,event_stream"
