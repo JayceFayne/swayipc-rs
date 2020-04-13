@@ -1,7 +1,7 @@
 use super::common::receive_from_stream;
+use super::socket::get_path;
 use crate::command::*;
 use crate::reply::*;
-use crate::socket::get_path;
 #[cfg(not(feature = "event_stream"))]
 use crate::EventIterator;
 #[cfg(feature = "event_stream")]
@@ -16,7 +16,7 @@ pub struct Connection(UnixStream);
 
 impl Connection {
     pub async fn new() -> Fallible<Self> {
-        Ok(Self(UnixStream::connect(get_path()?).await?))
+        Ok(Self(UnixStream::connect(get_path().await?).await?))
     }
 
     pub(crate) async fn raw_command<D: Deserialize>(

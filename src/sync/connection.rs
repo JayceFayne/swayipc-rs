@@ -1,7 +1,7 @@
 use super::common::receive_from_stream;
+use super::socket::get_path;
 use crate::command::*;
 use crate::reply::*;
-use crate::socket::get_path;
 use crate::{ensure, EventIterator, EventType, Fallible};
 use serde::de::DeserializeOwned as Deserialize;
 use serde_json::from_slice;

@@ -4,6 +4,7 @@ mod connection;
 mod event;
 #[cfg(feature = "event_stream")]
 mod event_stream;
+mod socket;
 #[cfg(test)]
 mod tests;
 
