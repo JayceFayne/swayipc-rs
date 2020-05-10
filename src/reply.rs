@@ -215,6 +215,7 @@ pub struct Node {
     pub pid: Option<i32>,
     pub window: Option<i32>,
     pub window_properties: Option<WindowProperties>,
+    pub marks: Option<Vec<String>>,
 }
 
 #[derive(Debug, Deserialize)]
