@@ -1,4 +1,4 @@
-use serde::{Deserializer, Deserialize};
+use serde::{Deserialize, Deserializer};
 
 #[derive(Debug, Deserialize)]
 pub struct CommandOutcome {
@@ -23,7 +23,8 @@ pub struct Workspace {
 }
 
 fn default_on_null<'de, D, T: Default + Deserialize<'de>>(deserializer: D) -> Result<T, D::Error>
-    where D: Deserializer<'de>
+where
+    D: Deserializer<'de>,
 {
     let opt = Option::deserialize(deserializer)?;
     Ok(opt.unwrap_or_default())
@@ -215,7 +216,7 @@ pub struct Node {
     pub pid: Option<i32>,
     pub window: Option<i32>,
     pub window_properties: Option<WindowProperties>,
-	#[serde(default)]
+    #[serde(default)]
     pub marks: Vec<String>,
 }
 

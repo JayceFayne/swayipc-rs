@@ -3,7 +3,7 @@ use std::{env, process};
 
 pub fn get_path() -> Fallible<String> {
     // Check I3SOCK first to allow compatibility with i3.
-    // sway sets I3SOCK to point to SWAYSOCK, so tihs also works for sway.
+    // sway sets I3SOCK to point to SWAYSOCK, so this also works for sway.
     if let Ok(sockpath) = env::var("I3SOCK") {
         return Ok(sockpath);
     }
