@@ -215,6 +215,7 @@ pub struct Node {
     pub app_id: Option<String>,
     pub pid: Option<i32>,
     pub window: Option<i32>,
+    pub num: Option<i32>, //workspace number if `node_type` == `NodeType::Workspace`
     pub window_properties: Option<WindowProperties>,
     #[serde(default)]
     pub marks: Vec<String>,
