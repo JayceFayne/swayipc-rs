@@ -219,6 +219,7 @@ pub struct Node {
     pub window_properties: Option<WindowProperties>,
     #[serde(default)]
     pub marks: Vec<String>,
+    pub shell: Option<String>,
 }
 
 #[derive(Debug, Deserialize)]
