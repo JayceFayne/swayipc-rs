@@ -219,6 +219,7 @@ pub struct Node {
     pub window_properties: Option<WindowProperties>,
     #[serde(default)]
     pub marks: Vec<String>,
+    pub max_render_time: Option<String>,
 }
 
 #[derive(Debug, Deserialize)]
