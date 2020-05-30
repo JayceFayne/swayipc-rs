@@ -160,6 +160,30 @@ pub struct WindowProperties {
 }
 
 #[derive(Debug, PartialEq, Deserialize)]
+#[serde(rename_all = "lowercase")]
+pub enum UserIdleInhibitType {
+    Focus,
+    Fullscreen,
+    Open,
+    Visible,
+    None,
+}
+
+#[derive(Debug, PartialEq, Deserialize)]
+#[serde(rename_all = "lowercase")]
+pub enum ApplicationIdleInhibitType {
+    Enabled,
+    None,
+}
+
+#[derive(Debug, PartialEq, Deserialize)]
+pub struct IdleInhibitors {
+	pub application: ApplicationIdleInhibitType,
+	pub user: UserIdleInhibitType,
+}
+
+
+#[derive(Debug, PartialEq, Deserialize)]
 #[serde(rename_all = "snake_case")]
 pub enum NodeType {
     Root,
@@ -219,6 +243,8 @@ pub struct Node {
     pub window_properties: Option<WindowProperties>,
     #[serde(default)]
     pub marks: Vec<String>,
+    pub inhibit_idle: Option<bool>,
+    pub idle_inhibitors: Option<IdleInhibitors>,
 }
 
 #[derive(Debug, Deserialize)]
