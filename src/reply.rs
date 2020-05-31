@@ -220,6 +220,7 @@ pub struct Node {
     #[serde(default)]
     pub marks: Vec<String>,
     pub max_render_time: Option<String>,
+    pub shell: Option<String>,
 }
 
 #[derive(Debug, Deserialize)]
