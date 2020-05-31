@@ -245,6 +245,7 @@ pub struct Node {
     pub marks: Vec<String>,
     pub inhibit_idle: Option<bool>,
     pub idle_inhibitors: Option<IdleInhibitors>,
+    pub shell: Option<String>,
 }
 
 #[derive(Debug, Deserialize)]
