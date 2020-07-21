@@ -178,10 +178,9 @@ pub enum ApplicationIdleInhibitType {
 
 #[derive(Debug, PartialEq, Deserialize)]
 pub struct IdleInhibitors {
-	pub application: ApplicationIdleInhibitType,
-	pub user: UserIdleInhibitType,
+    pub application: ApplicationIdleInhibitType,
+    pub user: UserIdleInhibitType,
 }
-
 
 #[derive(Debug, PartialEq, Deserialize)]
 #[serde(rename_all = "snake_case")]

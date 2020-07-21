@@ -1,4 +1,6 @@
 mod command;
+#[cfg(feature = "unstable")]
+mod command_builder;
 mod event;
 #[cfg(feature = "async")]
 mod not_sync;
@@ -13,6 +15,8 @@ pub use failure::{bail, ensure, Error, Fallible};
 
 #[cfg(feature = "async")]
 pub use async_std;
+#[cfg(feature = "unstable")]
+pub use command_builder::CommandBuilder;
 #[cfg(feature = "async")]
 #[cfg(not(feature = "event_stream"))]
 pub use not_sync::{Connection, EventIterator};
