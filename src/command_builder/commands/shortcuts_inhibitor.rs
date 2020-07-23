@@ -1,0 +1,11 @@
+use super::*;
+
+impl Command<ShortcutsInhibitor<()>> {
+    pub fn enable(self) -> Command<Final> {
+        self.push("enable").transmute()
+    }
+
+    pub fn disable(self) -> Command<Final> {
+        self.push("disable").transmute()
+    }
+}
