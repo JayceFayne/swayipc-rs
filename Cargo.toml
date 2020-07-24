@@ -18,7 +18,6 @@ futures-core = { version = "0.3", optional = true }
 async-std = { version = "1.6", features = ["attributes", "unstable"], optional = true }
 
 [features]
-default = ["unstable"]
 async = ["async-std"]
 event_stream = ["futures-core"]
 unstable = []
