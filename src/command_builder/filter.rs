@@ -1,163 +1,118 @@
-use std::borrow::Cow;
-use std::collections::HashMap;
-use std::fmt::Debug;
+use super::states::{Empty, Final};
 use std::fmt::Display;
+use std::marker::PhantomData;
 
-type Key<'a> = &'a str;
-type Value<'a> = Cow<'a, str>;
-type Map<'a> = HashMap<Key<'a>, Value<'a>>;
+pub trait EmptyFinal {}
+impl EmptyFinal for Empty {}
+impl EmptyFinal for Final {}
 
-pub struct Final {
+//TODO: document behavior on multiple fn call like `Filter::new().shell("a").shell("b")`
+
+#[derive(Debug)]
+pub struct Filter<T = Empty> {
     inner: String,
+    state: PhantomData<T>,
 }
 
-pub struct Constructing<'a> {
-    inner: Map<'a>,
-}
-
-pub struct Empty;
-
-pub trait Insert<'a> {
-    fn insert(self, key: Key<'a>, value: impl Into<Value<'a>>) -> Map<'a>;
-}
-
-impl<'a> Insert<'a> for Empty {
-    fn insert(self, key: Key<'a>, value: impl Into<Value<'a>>) -> Map<'a> {
-        let mut map = Map::new();
-        map.insert(key, value.into());
-        map
-    }
-}
-
-impl<'a> Insert<'a> for Constructing<'a> {
-    fn insert(mut self, key: Key<'a>, value: impl Into<Value<'a>>) -> Map<'a> {
-        self.inner.insert(key, value.into());
-        self.inner
-    }
-}
-
-pub struct Filter<T> {
-    state: T,
-}
-
-impl Filter<Empty> {
+impl Filter {
     pub fn new() -> Self {
-        Self { state: Empty }
-    }
-}
-
-impl Filter<Final> {
-    pub fn new_unchecked(inner: impl Into<String>) -> Self {
         Self {
-            state: Final {
-                inner: inner.into(),
-            },
+            inner: String::new(),
+            state: PhantomData,
         }
     }
 }
 
-impl<'a, T: Insert<'a>> Filter<T> {
-    fn insert(self, key: Key<'a>, value: impl Into<Value<'a>>) -> Filter<Constructing<'a>> {
+impl<T> Filter<T> {
+    fn insert<N>(self, key: impl AsRef<str>, value: impl AsRef<str>) -> Filter<N> {
+        let mut inner = self.inner;
+        if inner.is_empty() {
+            inner.push('[');
+        } else {
+            inner.pop();
+            inner.push(' ');
+        }
+        inner.push_str(key.as_ref());
+        inner.push('=');
+        inner.push_str(value.as_ref());
+        inner.push(']');
         Filter {
-            state: Constructing {
-                inner: self.state.insert(key, value),
-            },
+            inner,
+            state: PhantomData,
         }
     }
+}
 
-    pub fn app_id(self, value: impl Into<Value<'a>>) -> Filter<Constructing<'a>> {
+impl<T: EmptyFinal> Filter<T> {
+    pub fn app_id(self, value: impl AsRef<str>) -> Filter<Final> {
         self.insert("app_id", value)
     }
 
-    pub fn class(self, value: impl Into<Value<'a>>) -> Filter<Constructing<'a>> {
+    pub fn class(self, value: impl AsRef<str>) -> Filter<Final> {
         self.insert("class", value)
     }
 
-    pub fn con_id(self, value: impl Into<Value<'a>>) -> Filter<Constructing<'a>> {
+    pub fn con_id(self, value: impl AsRef<str>) -> Filter<Final> {
         self.insert("con_id", value)
     }
 
-    pub fn con_mark(self, value: impl Into<Value<'a>>) -> Filter<Constructing<'a>> {
+    pub fn con_mark(self, value: impl AsRef<str>) -> Filter<Final> {
         self.insert("con_mark", value)
     }
 
-    pub fn floating(self, value: impl Into<Value<'a>>) -> Filter<Constructing<'a>> {
+    pub fn floating(self, value: impl AsRef<str>) -> Filter<Final> {
         self.insert("floating", value)
     }
 
-    pub fn id(self, value: impl Into<Value<'a>>) -> Filter<Constructing<'a>> {
+    pub fn id(self, value: impl AsRef<str>) -> Filter<Final> {
         self.insert("id", value)
     }
 
-    pub fn instance(self, value: impl Into<Value<'a>>) -> Filter<Constructing<'a>> {
+    pub fn instance(self, value: impl AsRef<str>) -> Filter<Final> {
         self.insert("instance", value)
     }
 
-    pub fn pid(self, value: impl Into<Value<'a>>) -> Filter<Constructing<'a>> {
+    pub fn pid(self, value: impl AsRef<str>) -> Filter<Final> {
         self.insert("pid", value)
     }
 
-    pub fn shell(self, value: impl Into<Value<'a>>) -> Filter<Constructing<'a>> {
+    pub fn shell(self, value: impl AsRef<str>) -> Filter<Final> {
         self.insert("shell", value)
     }
 
-    pub fn tiling(self, value: impl Into<Value<'a>>) -> Filter<Constructing<'a>> {
+    pub fn tiling(self, value: impl AsRef<str>) -> Filter<Final> {
         self.insert("tiling", value)
     }
 
-    pub fn title(self, value: impl Into<Value<'a>>) -> Filter<Constructing<'a>> {
+    pub fn title(self, value: impl AsRef<str>) -> Filter<Final> {
         self.insert("title", value)
     }
 
-    pub fn urgent(self, value: impl Into<Value<'a>>) -> Filter<Constructing<'a>> {
+    pub fn urgent(self, value: impl AsRef<str>) -> Filter<Final> {
         self.insert("urgent", value)
     }
 
-    pub fn window_role(self, value: impl Into<Value<'a>>) -> Filter<Constructing<'a>> {
+    pub fn window_role(self, value: impl AsRef<str>) -> Filter<Final> {
         self.insert("window_role", value)
     }
 
-    pub fn window_type(self, value: impl Into<Value<'a>>) -> Filter<Constructing<'a>> {
+    pub fn window_type(self, value: impl AsRef<str>) -> Filter<Final> {
         self.insert("window_type", value)
     }
 
-    pub fn workspace(self, value: impl Into<Value<'a>>) -> Filter<Constructing<'a>> {
+    pub fn workspace(self, value: impl AsRef<str>) -> Filter<Final> {
         self.insert("workspace", value)
-    }
-}
-
-impl Filter<Constructing<'_>> {
-    pub fn finalize(&self) -> Filter<Final> {
-        let mut inner = String::new();
-        inner.push('[');
-        for (key, value) in self.state.inner.iter() {
-            inner.push_str(key);
-            inner.push('=');
-            inner.push_str(value);
-            inner.push(' ');
-        }
-        inner.pop();
-        inner.push(']');
-        Filter {
-            state: Final { inner },
-        }
-    }
-}
-
-impl Debug for Filter<Constructing<'_>> {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        Debug::fmt(&self.state.inner, f)
     }
 }
 
 impl Display for Filter<Final> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        Display::fmt(&self.state.inner, f)
+        self.inner.fmt(f)
     }
 }
 
 impl AsRef<str> for Filter<Final> {
     fn as_ref(&self) -> &str {
-        &self.state.inner
+        &self.inner
     }
 }

@@ -43,3 +43,4 @@ pub struct Absolute<T>(PhantomData<T>);
 pub struct Position<T>(PhantomData<T>);
 
 pub struct Final;
+pub struct Empty;

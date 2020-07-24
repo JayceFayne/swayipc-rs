@@ -30,7 +30,7 @@ mod titlebar_padding;
 mod unmark;
 mod urgent;
 
-impl Command<()> {
+impl Command {
     pub fn fullscreen(self) -> Command<Fullscreen<()>> {
         self.push("fullscreen").transmute()
     }

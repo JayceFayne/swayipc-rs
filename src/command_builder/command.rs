@@ -5,12 +5,12 @@ use std::marker::PhantomData;
 
 //TODO: macro
 
-pub struct Command<T> {
+pub struct Command<T = ()> {
     inner: String,
     state: PhantomData<T>,
 }
 
-impl Command<()> {
+impl Command {
     pub fn new() -> Self {
         Self {
             inner: String::new(),
