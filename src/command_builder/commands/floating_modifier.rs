@@ -6,7 +6,7 @@ impl Command<FloatingModifier<()>> {
     }
 
     pub fn with(self, modifier: impl AsRef<str>) -> Command<FloatingModifier<With<()>>> {
-        self.push(modifier.as_ref()).transmute()
+        self.push(modifier).transmute()
     }
 }
 

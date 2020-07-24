@@ -5,23 +5,23 @@ impl Command<Mark<()>> {
         self.push("--add").transmute()
     }
 
-    pub fn toggle(self) -> Command<Mark<Add<Replace<()>>>> {
-        self.push("--toggle").transmute()
+    pub fn replace(self) -> Command<Mark<Add<()>>> {
+        self.push("--replace").transmute()
     }
 }
 
 impl Command<Mark<Add<()>>> {
-    pub fn replace(self) -> Command<Mark<Add<Replace<()>>>> {
-        self.push("--replace").transmute()
+    pub fn toggle(self) -> Command<Mark<Add<Replace<()>>>> {
+        self.push("--toggle").transmute()
     }
 
     pub fn identifier(self, name: impl AsRef<str>) -> Command<Final> {
-        self.push(name.as_ref()).transmute()
+        self.push(name).transmute()
     }
 }
 
 impl Command<Mark<Add<Replace<()>>>> {
     pub fn identifier(self, name: impl AsRef<str>) -> Command<Final> {
-        self.push(name.as_ref()).transmute()
+        self.push(name).transmute()
     }
 }

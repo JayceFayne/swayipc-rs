@@ -1,15 +1,12 @@
-use super::states::{Empty, Final};
+use super::states::Final;
+use std::default::Default;
 use std::fmt::Display;
 use std::marker::PhantomData;
-
-pub trait EmptyFinal {}
-impl EmptyFinal for Empty {}
-impl EmptyFinal for Final {}
 
 //TODO: document behavior on multiple fn call like `Filter::new().shell("a").shell("b")`
 
 #[derive(Debug)]
-pub struct Filter<T = Empty> {
+pub struct Filter<T = ()> {
     inner: String,
     state: PhantomData<T>,
 }
@@ -43,7 +40,11 @@ impl<T> Filter<T> {
     }
 }
 
-impl<T: EmptyFinal> Filter<T> {
+pub trait Finalize {}
+impl Finalize for () {}
+impl Finalize for Final {}
+
+impl<T: Finalize> Filter<T> {
     pub fn app_id(self, value: impl AsRef<str>) -> Filter<Final> {
         self.insert("app_id", value)
     }
@@ -114,5 +115,17 @@ impl Display for Filter<Final> {
 impl AsRef<str> for Filter<Final> {
     fn as_ref(&self) -> &str {
         &self.inner
+    }
+}
+
+impl From<Filter<Final>> for String {
+    fn from(filter: Filter<Final>) -> Self {
+        filter.inner
+    }
+}
+
+impl Default for Filter {
+    fn default() -> Self {
+        Self::new()
     }
 }

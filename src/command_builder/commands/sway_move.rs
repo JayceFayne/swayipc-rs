@@ -1,23 +1,23 @@
 use super::*;
 
 impl Command<Move<()>> {
-    pub fn left(self) -> Command<Move<Direction<()>>> {
+    pub fn left(self) -> Command<Valid<Move<Direction<()>>>> {
         self.push("left").transmute()
     }
 
-    pub fn right(self) -> Command<Move<Direction<()>>> {
+    pub fn right(self) -> Command<Valid<Move<Direction<()>>>> {
         self.push("right").transmute()
     }
 
-    pub fn up(self) -> Command<Move<Direction<()>>> {
+    pub fn up(self) -> Command<Valid<Move<Direction<()>>>> {
         self.push("up").transmute()
     }
 
-    pub fn down(self) -> Command<Move<Direction<()>>> {
+    pub fn down(self) -> Command<Valid<Move<Direction<()>>>> {
         self.push("down").transmute()
     }
 
-    pub fn absolute(self) -> Command<Move<Absolute<()>>> {
+    pub fn absolute(self) -> Command<Valid<Move<Direction<()>>>> {
         self.push("absolute").transmute()
     }
 
@@ -62,7 +62,7 @@ impl Command<Move<Absolute<()>>> {
 
 impl Command<Move<Absolute<Position<()>>>> {
     pub fn pos_x(self, x: usize) -> Command<Move<Absolute<Position<X<With<()>>>>>> {
-        self.push(x.to_string().as_str()).transmute()
+        self.push(x.to_string()).transmute()
     }
 
     pub fn center(self) -> Command<Final> {
@@ -82,7 +82,7 @@ impl Command<Move<Absolute<Position<X<With<()>>>>>> {
 
 impl Command<Move<Absolute<Position<X<With<Y<()>>>>>>> {
     pub fn pos_y(self, y: usize) -> Command<Move<Absolute<Position<X<With<Y<With<()>>>>>>>> {
-        self.push(y.to_string().as_str()).transmute()
+        self.push(y.to_string()).transmute()
     }
 }
 
@@ -98,7 +98,7 @@ impl Command<Move<Absolute<Position<X<With<Y<With<()>>>>>>>> {
 
 impl Command<Move<Position<()>>> {
     pub fn pos_x(self, x: usize) -> Command<Move<Absolute<Position<X<With<()>>>>>> {
-        self.push(x.to_string().as_str()).transmute()
+        self.push(x.to_string()).transmute()
     }
 
     pub fn center(self) -> Command<Final> {
@@ -118,14 +118,9 @@ impl Command<Move<Position<()>>> {
     }
 }
 
-impl Command<Move<Direction<()>>> {
-    //FIXME:with macro, workaround for not impl `AsRef<str>` for `Command<Move<Direction<()>>>`
-    pub fn tiling(self) -> Command<Final> {
-        self.transmute()
-    }
-
+impl Command<Valid<Move<Direction<()>>>> {
     pub fn by(self, px: usize) -> Command<Final> {
-        self.push(px.to_string().as_str()).push("px").transmute()
+        self.push(px.to_string()).push("px").transmute()
     }
 }
 
@@ -189,13 +184,11 @@ impl Command<Move<WinCon<To<Workspace<()>>>>> {
 
 impl Command<Move<WinCon<To<Workspace<To<With<()>>>>>>> {
     pub fn name(self, name: impl AsRef<str>) -> Command<Final> {
-        self.push(name.as_ref()).transmute()
+        self.push(name).transmute()
     }
 
     pub fn number(self, id: usize) -> Command<Final> {
-        self.push("number")
-            .push(id.to_string().as_str())
-            .transmute()
+        self.push("number").push(id.to_string()).transmute()
     }
 }
 
@@ -207,7 +200,7 @@ impl Command<Move<WinCon<()>>> {
 
 impl Command<Move<WinCon<To<()>>>> {
     pub fn mark(self, mark: impl AsRef<str>) -> Command<Final> {
-        self.push("mark").push(mark.as_ref()).transmute()
+        self.push("mark").push(mark).transmute()
     }
 
     pub fn scratchpad(self) -> Command<Final> {
@@ -251,10 +244,10 @@ impl Command<Move<WinCon<To<Output<()>>>>> {
 
 impl Command<Move<WinCon<To<Output<With<()>>>>>> {
     pub fn name(self, name: impl AsRef<str>) -> Command<Final> {
-        self.push(name.as_ref()).transmute()
+        self.push(name).transmute()
     }
 
     pub fn id(self, id: usize) -> Command<Final> {
-        self.push(id.to_string().as_str()).transmute()
+        self.push(id.to_string()).transmute()
     }
 }

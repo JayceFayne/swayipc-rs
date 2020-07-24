@@ -10,6 +10,6 @@ impl Command<DefaultBorder<()>> {
     }
 
     pub fn pixel(self, px: usize) -> Command<Final> {
-        self.push("pixel").push(px.to_string().as_str()).transmute()
+        self.push("pixel").push(px.to_string()).transmute()
     }
 }

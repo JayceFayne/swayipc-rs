@@ -6,12 +6,12 @@ impl Command<Rename<()>> {
     }
 
     pub fn workspace(self, name: impl AsRef<str>) -> Command<Rename<To<()>>> {
-        self.push("workspace").push(name.as_ref()).transmute()
+        self.push("workspace").push(name).transmute()
     }
 }
 
 impl Command<Rename<To<()>>> {
     pub fn to(self, name: impl AsRef<str>) -> Command<Final> {
-        self.push("to").push(name.as_ref()).transmute()
+        self.push("to").push(name).transmute()
     }
 }

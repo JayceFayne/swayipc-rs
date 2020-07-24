@@ -8,16 +8,14 @@ impl Command<Swap<()>> {
 
 impl Command<Swap<With<()>>> {
     pub fn id(self, id: usize) -> Command<Final> {
-        self.push("id").push(id.to_string().as_str()).transmute()
+        self.push("id").push(id.to_string()).transmute()
     }
 
     pub fn con_id(self, con_id: usize) -> Command<Final> {
-        self.push("con_id")
-            .push(con_id.to_string().as_str())
-            .transmute()
+        self.push("con_id").push(con_id.to_string()).transmute()
     }
 
     pub fn mark(self, mark: impl AsRef<str>) -> Command<Final> {
-        self.push("mark").push(mark.as_ref()).transmute()
+        self.push("mark").push(mark).transmute()
     }
 }
