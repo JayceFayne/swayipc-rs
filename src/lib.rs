@@ -1,6 +1,4 @@
 mod command;
-#[cfg(feature = "unstable")]
-mod command_builder;
 mod event;
 #[cfg(feature = "async")]
 mod not_sync;
@@ -15,14 +13,14 @@ pub use failure::{bail, ensure, Error, Fallible};
 
 #[cfg(feature = "async")]
 pub use async_std;
-#[cfg(feature = "unstable")]
-pub use command_builder::{Command, Filter};
 #[cfg(feature = "async")]
 #[cfg(not(feature = "event_stream"))]
 pub use not_sync::{Connection, EventIterator};
 #[cfg(feature = "async")]
 #[cfg(feature = "event_stream")]
 pub use not_sync::{Connection, EventStream};
+#[cfg(feature = "unstable")]
+pub use swayipc_command_builder::{Command, Filter};
 #[cfg(not(feature = "async"))]
 pub use sync::{Connection, EventIterator};
 
