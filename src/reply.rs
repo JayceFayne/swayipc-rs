@@ -153,10 +153,12 @@ pub struct Rect {
 #[derive(Debug, PartialEq, Deserialize)]
 pub struct WindowProperties {
     pub title: Option<String>,
-    pub instance: String,
-    pub class: String,
+    pub instance: Option<String>,
+    pub class: Option<String>,
     pub window_role: Option<String>,
-    pub transient_for: Option<String>,
+    // only this field is required, and it may be `null` so we need to handle it
+    #[serde(deserialize_with = "default_on_null")]
+    pub transient_for: String,
 }
 
 #[derive(Debug, PartialEq, Deserialize)]
