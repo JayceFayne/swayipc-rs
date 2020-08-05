@@ -1,5 +1,4 @@
-use swayipc::{Command, Filter};
-use swayipc::{Connection, Fallible};
+use swayipc::{Command, Connection, Fallible, Filter};
 
 fn main() -> Fallible<()> {
     let filter = Filter::new().shell("xwayland");
