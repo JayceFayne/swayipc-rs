@@ -129,7 +129,9 @@ pub struct Input {
     pub xkb_active_layout_name: Option<String>,
     #[serde(default)]
     pub xkb_layout_names: Vec<String>,
+    pub xkb_active_layout_index: Option<i32>,
     #[serde(rename = "xkb_active_layout_index")]
+    #[deprecated(since = "2.8.0",note = "Please use xkb_active_layout_index instead")]
     pub xkb_active_layout_name_index: Option<u32>,
     pub libinput: Option<Libinput>,
 }
