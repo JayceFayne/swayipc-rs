@@ -19,6 +19,7 @@ features = ["async"]
 ## Usage
 
 Examples of how to use the library can be found [here](examples).
+They can be run using cargo, e.g.`cargo run --example hovered_window`.
 
 ## Versioning
 
