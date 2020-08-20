@@ -1,0 +1,10 @@
+[package]
+name = "event_printer_tokio"
+version = "1.0.0"
+authors = ["Jayce Fayne <jayce.fayne@mailbox.org>"]
+edition = "2018"
+
+[dependencies]
+swayipc-async = { path = "../../async" }
+tokio = { version = "0.3.2", features = ["rt-multi-thread", "macros"] }
+futures-util = "0.3.7"

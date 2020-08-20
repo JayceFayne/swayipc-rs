@@ -1,0 +1,20 @@
+[package]
+name = "swayipc-types"
+version = "1.0.0-alpha"
+authors = ["Jayce Fayne <jayce.fayne@mailbox.org>"]
+edition = "2018"
+description = "A library containing Type defintions from sway's IPC interface"
+license = "MIT"
+repository = "https://github.com/jaycefayne/swayipc-rs"
+categories = ["network-programming"]
+keywords = ["sway", "swaywm", "swayipc","ipc"]
+readme = "README.md"
+
+[dependencies]
+serde = { version = "1.0.117", features = ["derive"] }
+serde_json = "1.0.59"
+thiserror = { version =  "1.0.21", optional = true }
+
+[features]
+default = ["error"]
+error = ["thiserror"]

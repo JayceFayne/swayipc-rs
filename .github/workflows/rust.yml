@@ -1,13 +1,29 @@
 name: Rust
 
-on: [push]
+on:
+  pull_request:
+  push:
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Build
-        run: cargo build --release --verbose
-      - name: Build with async features
-        run: cargo build --release --verbose --features "async,event_stream"
+      - name: Build swayipc types
+        run: cargo build --release --verbose --package swayipc-types
+      - name: Build blocking swayipc
+        run: cargo build --release --verbose --package swayipc
+      - name: Build async swayipc
+        run: cargo build --release --verbose --package swayipc-async
+      - name: Build command_loop example
+        run: cargo build --release --verbose --package command_loop
+      - name: Build command_loop_async_std example
+        run: cargo build --release --verbose --package command_loop_async_std
+      - name: Build event_printer example
+        run: cargo build --release --verbose --package event_printer
+      - name: Build event_printer_tokio example
+        run: cargo build --release --verbose --package event_printer_tokio
+      - name: Build hovered_window example
+        run: cargo build --release --verbose --package hovered_window
+      - name: Build hovered_window_futures_lite example
+        run: cargo build --release --verbose --package hovered_window_futures_lite
