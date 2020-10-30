@@ -1,0 +1,8 @@
+[package]
+name = "event_printer"
+version = "1.0.0"
+authors = ["Jayce Fayne <jayce.fayne@mailbox.org>"]
+edition = "2018"
+
+[dependencies]
+swayipc = { path = "../../blocking" }

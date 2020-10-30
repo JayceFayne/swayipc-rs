@@ -1,0 +1,9 @@
+[package]
+name = "hovered_window_futures_lite"
+version = "1.0.0"
+authors = ["Jayce Fayne <jayce.fayne@mailbox.org>"]
+edition = "2018"
+
+[dependencies]
+swayipc-async = { path = "../../async" }
+futures-lite = "1.11.2"

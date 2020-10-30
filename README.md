@@ -8,13 +8,7 @@
 [license]: https://github.com/JayceFayne/swayipc-rs/blob/master/LICENSE.md
 
 A Rust library for controlling swaywm through its [IPC interface](https://github.com/swaywm/sway/blob/master/sway/sway-ipc.7.scd).
-This library can be used  in either a synchronous or asynchronous manner.
-The async feature can be enabled by adding the following to your Cargo.toml:
-
-```toml
-[dependencies.swayipc]
-features = ["async"]
-```
+This repository contains [swayipc](blocking) a blocking way to communicate with sway and [swayipc-async](async) for asynchronus communication.
 
 ## Usage
 

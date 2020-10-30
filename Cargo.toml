@@ -1,56 +1,12 @@
-[package]
-name = "swayipc"
-version = "2.7.2"
-authors = ["Jayce Fayne <jayce.fayne@mailbox.org>"]
-edition = "2018"
-description = "A library for controlling sway through its IPC interface"
-license = "MIT"
-repository = "https://github.com/jaycefayne/swayipc-rs"
-categories = ["asynchronous", "concurrency", "network-programming"]
-keywords = ["sway", "swaywm", "swayipc","ipc", "async"]
-readme = "README.md"
-
-[dependencies]
-serde = { version = "1.0", features = ["derive"] }
-serde_json = "1.0"
-failure = "0.1"
-futures-core = { version = "0.3", optional = true }
-async-std = { version = "1.6", features = ["attributes", "unstable"], optional = true }
-swayipc-command-builder = { version = "0.1",  optional = true }
-
-[features]
-async = ["async-std"]
-event_stream = ["futures-core"]
-unstable = ["swayipc-command-builder"]
-
-[[example]]
-name = "command_loop"
-path = "examples/command_loop.rs"
-
-[[example]]
-name = "command_loop_async"
-path = "examples/command_loop_async.rs"
-required-features = ["async"]
-
-[[example]]
-name = "event_printer"
-path = "examples/event_printer.rs"
-
-[[example]]
-name = "event_printer_async"
-path = "examples/event_printer_async.rs"
-required-features = ["async", "event_stream"]
-
-[[example]]
-name = "hovered_window"
-path = "examples/hovered_window.rs"
-
-[[example]]
-name = "hovered_window_async"
-path = "examples/hovered_window_async.rs"
-required-features = ["async", "event_stream"]
-
-[[example]]
-name = "command_builder"
-path = "examples/command_builder.rs"
-required-features = ["unstable"]
+[workspace]
+members = [
+    "types",
+    "blocking",
+    "async",
+    "examples/command_loop",
+    "examples/command_loop_async_std",
+    "examples/event_printer",
+    "examples/event_printer_tokio",
+    "examples/hovered_window",
+    "examples/hovered_window_futures_lite",
+]

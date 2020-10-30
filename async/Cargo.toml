@@ -1,0 +1,19 @@
+[package]
+name = "swayipc-async"
+version = "2.0.0-alpha"
+authors = ["Jayce Fayne <jayce.fayne@mailbox.org>"]
+edition = "2018"
+description = "A library for controlling sway through its IPC interface"
+license = "MIT"
+repository = "https://github.com/jaycefayne/swayipc-rs"
+categories = ["network-programming"]
+keywords = ["sway", "swaywm", "swayipc","ipc", "async"]
+readme = "README.md"
+
+[dependencies]
+swayipc-types = { version = "1.0.0-alpha", path = "../types" }
+serde = "1.0.117"
+serde_json = "1.0.59"
+async-io  = "1.1.10"
+async-process = "1.0.1"
+futures-lite = "1.11.2"
