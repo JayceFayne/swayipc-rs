@@ -10,7 +10,7 @@ pub struct CommandOutcome {
 #[non_exhaustive]
 #[derive(Debug, Deserialize)]
 pub struct Workspace {
-    pub id: i32,
+    pub id: i64,
     pub num: i32,
     pub name: String,
     pub layout: String,
@@ -42,7 +42,7 @@ pub struct Mode {
 #[non_exhaustive]
 #[derive(Debug, Deserialize)]
 pub struct Output {
-    pub id: i32,
+    pub id: i64,
     pub name: String,
     pub make: String,
     pub model: String,
@@ -203,6 +203,7 @@ pub enum NodeType {
     Workspace,
     Con,
     FloatingCon,
+    Dockarea,  // i3-specific
 }
 
 #[non_exhaustive]
@@ -224,6 +225,7 @@ pub enum NodeLayout {
     Stacked,
     Tabbed,
     Output,
+    Dockarea,  // i3-specific
     None,
 }
 
@@ -253,7 +255,7 @@ pub struct Node {
     pub fullscreen_mode: Option<u8>,
     pub app_id: Option<String>,
     pub pid: Option<i32>,
-    pub window: Option<i32>,
+    pub window: Option<i64>,
     pub num: Option<i32>, //workspace number if `node_type` == `NodeType::Workspace`
     pub window_properties: Option<WindowProperties>,
     #[serde(default)]
@@ -266,7 +268,7 @@ pub struct Node {
 #[non_exhaustive]
 #[derive(Debug, Deserialize)]
 pub struct Window {
-    pub id: i32,
+    pub id: i64,
     pub name: Option<String>,
     pub border: NodeBorder,
     pub current_border_width: i32,
@@ -281,14 +283,14 @@ pub struct Window {
     pub sticky: bool,
     pub fullscreen_mode: Option<u8>,
     pub app_id: Option<String>,
-    pub pid: i32,
+    pub pid: Option<i32>,
     pub window: Option<i32>,
     pub window_properties: Option<WindowProperties>,
     #[serde(default)]
     pub marks: Vec<String>,
-    pub inhibit_idle: bool,
-    pub idle_inhibitors: IdleInhibitors,
-    pub shell: ShellType,
+    pub inhibit_idle: Option<bool>,
+    pub idle_inhibitors: Option<IdleInhibitors>,
+    pub shell: Option<ShellType>,
 }
 
 #[non_exhaustive]
