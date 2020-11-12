@@ -42,7 +42,7 @@ pub struct Mode {
 #[non_exhaustive]
 #[derive(Debug, Deserialize)]
 pub struct Output {
-    pub id: i64,
+    pub id: Option<i64>, // Sway doesn't give disabled outputs ids
     pub name: String,
     pub make: String,
     pub model: String,
