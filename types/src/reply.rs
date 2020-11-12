@@ -14,7 +14,7 @@ pub struct Workspace {
     pub num: i32,
     pub name: String,
     pub layout: String,
-    pub visible: Option<bool>, // Missing in WorkspaceEvent.current and WorkspaceEvent.current
+    pub visible: Option<bool>, // Missing in WorkspaceEvent.current and WorkspaceEvent.old
     pub focused: bool,
     pub urgent: bool,
     pub representation: Option<String>,
