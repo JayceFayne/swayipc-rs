@@ -4,7 +4,16 @@ use serde::Deserialize;
 #[derive(Debug, Deserialize)]
 pub struct CommandOutcome {
     pub success: bool,
-    pub error: Option<String>,
+    #[serde(flatten)]
+    pub error: Option<CommandError>,
+}
+
+#[non_exhaustive]
+#[derive(Debug, Deserialize)]
+pub struct CommandError {
+    pub parse_error: bool,
+    #[serde(rename = "error")]
+    pub message: String,
 }
 
 #[non_exhaustive]

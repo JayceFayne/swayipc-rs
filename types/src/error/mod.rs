@@ -25,4 +25,6 @@ pub enum Error {
     SwayFailed(i32, Vec<u8>),
     #[error("command failed with '{0}'")]
     CommandFailed(String),
+    #[error("command could not be parsed '{0}'")]
+    CommandParse(String),
 }
