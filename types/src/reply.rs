@@ -203,7 +203,7 @@ pub enum NodeType {
     Workspace,
     Con,
     FloatingCon,
-    Dockarea,  // i3-specific
+    Dockarea, // i3-specific
 }
 
 #[non_exhaustive]
@@ -225,7 +225,7 @@ pub enum NodeLayout {
     Stacked,
     Tabbed,
     Output,
-    Dockarea,  // i3-specific
+    Dockarea, // i3-specific
     None,
 }
 
@@ -257,34 +257,6 @@ pub struct Node {
     pub pid: Option<i32>,
     pub window: Option<i64>,
     pub num: Option<i32>, //workspace number if `node_type` == `NodeType::Workspace`
-    pub window_properties: Option<WindowProperties>,
-    #[serde(default)]
-    pub marks: Vec<String>,
-    pub inhibit_idle: Option<bool>,
-    pub idle_inhibitors: Option<IdleInhibitors>,
-    pub shell: Option<ShellType>,
-}
-
-#[non_exhaustive]
-#[derive(Debug, Deserialize)]
-pub struct Window {
-    pub id: i64,
-    pub name: Option<String>,
-    pub border: NodeBorder,
-    pub current_border_width: i32,
-    pub layout: NodeLayout,
-    pub percent: Option<f64>,
-    pub rect: Rect,
-    pub window_rect: Rect,
-    pub deco_rect: Rect,
-    pub geometry: Rect,
-    pub urgent: bool,
-    pub focused: bool,
-    pub sticky: bool,
-    pub fullscreen_mode: Option<u8>,
-    pub app_id: Option<String>,
-    pub pid: Option<i32>,
-    pub window: Option<i32>,
     pub window_properties: Option<WindowProperties>,
     #[serde(default)]
     pub marks: Vec<String>,
@@ -451,7 +423,7 @@ pub struct ModeEvent {
 #[derive(Debug, Deserialize)]
 pub struct WindowEvent {
     pub change: WindowChange,
-    pub container: Window,
+    pub container: Node,
 }
 
 #[non_exhaustive]
