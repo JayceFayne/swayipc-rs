@@ -14,7 +14,7 @@ pub struct Workspace {
     pub num: i32,
     pub name: String,
     pub layout: String,
-    pub visible: Option<bool>, // Missing in WorkspaceEvent.current and WorkspaceEvent.old
+    pub visible: bool,
     pub focused: bool,
     pub urgent: bool,
     pub representation: Option<String>,
@@ -436,8 +436,8 @@ pub struct TickEvent {
 #[derive(Debug, Deserialize)]
 pub struct WorkspaceEvent {
     pub change: WorkspaceChange,
-    pub current: Option<Workspace>, //Only None if WorkspaceChange::Reload
-    pub old: Option<Workspace>,     //Only None if WorkspaceChange::Reload
+    pub current: Option<Node>, //Only None if WorkspaceChange::Reload
+    pub old: Option<Node>,     //Only None if WorkspaceChange::Reload
 }
 
 #[non_exhaustive]
