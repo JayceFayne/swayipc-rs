@@ -417,8 +417,8 @@ pub struct TickEvent {
 #[derive(Debug, Deserialize)]
 pub struct WorkspaceEvent {
     pub change: WorkspaceChange,
-    pub current: Option<Workspace>, //Only None if WorkspaceChange::Reload
-    pub old: Option<Workspace>,     //Only None if WorkspaceChange::Reload
+    pub current: Option<Node>, //Only None if WorkspaceChange::Reload
+    pub old: Option<Node>,     //Only None if WorkspaceChange::Reload
 }
 
 #[non_exhaustive]
