@@ -1,6 +1,6 @@
 [package]
 name = "swayipc"
-version = "3.0.0-alpha"
+version = "3.0.0-alpha.1"
 authors = ["Jayce Fayne <jayce.fayne@mailbox.org>"]
 edition = "2018"
 description = "A library for controlling sway through its IPC interface"
@@ -11,6 +11,6 @@ keywords = ["sway", "swaywm", "swayipc","ipc"]
 readme = "README.md"
 
 [dependencies]
-swayipc-types = { version = "1.0.0-alpha", path = "../types" }
+swayipc-types = { version = "1.0.0-alpha.1", path = "../types" }
 serde = "1.0.117"
 serde_json = "1.0.60"
