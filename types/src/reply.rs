@@ -439,8 +439,7 @@ pub struct WindowEvent {
 #[derive(Debug, Deserialize)]
 pub struct BindingEvent {
     pub change: BindingChange,
-    #[serde(flatten)]
-    pub optional: Option<BindingEventOps>,
+    pub binding: BindingEventOps,
 }
 
 #[non_exhaustive]
@@ -450,7 +449,7 @@ pub struct BindingEventOps {
     #[serde(default)]
     pub event_state_mask: Vec<String>,
     pub input_code: u8,
-    pub symbol: String,
+    pub symbol: Option<String>,
     pub input_type: InputType,
 }
 
