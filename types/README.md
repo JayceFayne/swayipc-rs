@@ -1,4 +1,4 @@
-# swayipc-types &emsp; [![Action Badge]][actions] [![Version Badge]][crates.io] [![License Badge]][license]
+# swayipc-types &emsp; [![Action Badge]][actions] [![Version Badge]][crates.io] [![License Badge]][license] [![Docs Badge]][docs]
 
 [Version Badge]: https://img.shields.io/crates/v/swayipc-types.svg
 [crates.io]: https://crates.io/crates/swayipc-types
@@ -6,6 +6,8 @@
 [actions]: https://github.com/JayceFayne/swayipc-rs/actions
 [License Badge]: https://img.shields.io/crates/l/swayipc-types.svg
 [license]: https://github.com/JayceFayne/swayipc-rs/blob/master/LICENSE.md
+[Docs Badge]: https://docs.rs/swayipc-types/badge.svg
+[docs]: https://docs.rs/swayipc-types
 
 A Rust library containing types used to control swaywm through its [IPC interface](https://github.com/swaywm/sway/blob/master/sway/sway-ipc.7.scd).
 

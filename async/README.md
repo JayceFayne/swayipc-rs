@@ -1,4 +1,4 @@
-# swayipc-async &emsp; [![Action Badge]][actions] [![Version Badge]][crates.io] [![License Badge]][license]
+# swayipc-async &emsp; [![Action Badge]][actions] [![Version Badge]][crates.io] [![License Badge]][license] [![Docs Badge]][docs]
 
 [Version Badge]: https://img.shields.io/crates/v/swayipc-async.svg
 [crates.io]: https://crates.io/crates/swayipc-async
@@ -6,6 +6,8 @@
 [actions]: https://github.com/JayceFayne/swayipc-rs/actions
 [License Badge]: https://img.shields.io/crates/l/swayipc-async.svg
 [license]: https://github.com/JayceFayne/swayipc-rs/blob/master/LICENSE.md
+[Docs Badge]: https://docs.rs/swayipc-async/badge.svg
+[docs]: https://docs.rs/swayipc-async
 
 A Rust library for controlling swaywm through its [IPC interface](https://github.com/swaywm/sway/blob/master/sway/sway-ipc.7.scd). This library is executor agnostic and can be used with any async exectutor!
 

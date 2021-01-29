@@ -1,4 +1,4 @@
-# swayipc &emsp; [![Action Badge]][actions] [![Version Badge]][crates.io] [![License Badge]][license]
+# swayipc &emsp; [![Action Badge]][actions] [![Version Badge]][crates.io] [![License Badge]][license] [![Docs Badge]][docs]
 
 [Version Badge]: https://img.shields.io/crates/v/swayipc.svg
 [crates.io]: https://crates.io/crates/swayipc
@@ -6,6 +6,8 @@
 [actions]: https://github.com/JayceFayne/swayipc-rs/actions
 [License Badge]: https://img.shields.io/crates/l/swayipc.svg
 [license]: https://github.com/JayceFayne/swayipc-rs/blob/master/LICENSE.md
+[Docs Badge]: https://docs.rs/swayipc/badge.svg
+[docs]: https://docs.rs/swayipc
 
 A Rust library for controlling swaywm through its [IPC interface](https://github.com/swaywm/sway/blob/master/sway/sway-ipc.7.scd).
 
