@@ -69,6 +69,7 @@ pub struct Output {
     pub rect: Rect,
     #[serde(default)]
     pub focus: Vec<i32>,
+    pub focused: bool,
 }
 
 #[non_exhaustive]
