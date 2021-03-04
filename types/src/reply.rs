@@ -273,6 +273,7 @@ pub struct Node {
     pub inhibit_idle: Option<bool>,
     pub idle_inhibitors: Option<IdleInhibitors>,
     pub shell: Option<ShellType>,
+    pub visible: Option<bool>,
 }
 
 #[non_exhaustive]
