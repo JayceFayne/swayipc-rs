@@ -9,7 +9,7 @@
 [Docs Badge]: https://docs.rs/swayipc-async/badge.svg
 [docs]: https://docs.rs/swayipc-async
 
-A Rust library for controlling swaywm through its [IPC interface](https://github.com/swaywm/sway/blob/master/sway/sway-ipc.7.scd). This library is executor agnostic and can be used with any async exectutor!
+A Rust library for controlling swaywm through its [IPC interface](https://github.com/swaywm/sway/blob/master/sway/sway-ipc.7.scd). This library is executor agnostic and can be used with any async executor!
 
 ## Usage
 
