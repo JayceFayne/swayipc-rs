@@ -1,34 +1,39 @@
-use async_process::Command;
+use async_io::Async;
+use futures_lite::AsyncReadExt;
 use std::env;
 use std::path::PathBuf;
-use swayipc_types::{Error::SwayFailed, Fallible};
+use std::process::{Command, Stdio};
+use swayipc_types::Fallible;
 
-//TODO: try block instead of function
 pub async fn get_socket_path() -> Fallible<PathBuf> {
-    _get_socket_path().await.map(PathBuf::from)
+    async {
+        if let Ok(socketpath) = env::var("I3SOCK") {
+            return Ok(socketpath);
+        }
+        if let Ok(socketpath) = env::var("SWAYSOCK") {
+            return Ok(socketpath);
+        }
+        if let Ok(socketpath) = spawn("i3").await {
+            return Ok(socketpath);
+        }
+        if let Ok(socketpath) = spawn("sway").await {
+            return Ok(socketpath);
+        }
+        unreachable!()
+    }
+    .await
+    .map(PathBuf::from)
 }
 
-async fn _get_socket_path() -> Fallible<String> {
-    if let Ok(sockpath) = env::var("I3SOCK") {
-        return Ok(sockpath);
-    }
-    if let Ok(sockpath) = env::var("SWAYSOCK") {
-        return Ok(sockpath);
-    }
-    let output = Command::new("i3").arg("--get-socketpath").output().await?;
-    if output.status.success() {
-        return Ok(String::from_utf8_lossy(&output.stdout)
-            .trim_end_matches('\n')
-            .to_owned());
-    }
-    let output = Command::new("sway")
+async fn spawn(wm: &str) -> Fallible<String> {
+    let mut child = Command::new(wm)
         .arg("--get-socketpath")
-        .output()
-        .await?;
-    if output.status.success() {
-        return Ok(String::from_utf8_lossy(&output.stdout)
-            .trim_end_matches('\n')
-            .to_owned());
+        .stdout(Stdio::piped())
+        .spawn()?;
+    let mut buf = String::new();
+    if let Some(stdout) = child.stdout.take() {
+        Async::new(stdout)?.read_to_string(&mut buf).await?;
+        buf.pop();
     }
-    Err(SwayFailed(output.status.code().unwrap_or(0), output.stderr))
+    Ok(buf)
 }
