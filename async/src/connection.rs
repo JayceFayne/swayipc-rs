@@ -1,5 +1,5 @@
 use super::common::receive_from_stream;
-use super::socket::get_socket_path;
+use super::socket::get_socketpath;
 use crate::{CommandType::*, Error::SubscriptionFailed, *};
 use async_io::{Async, Timer};
 use futures_lite::AsyncWriteExt;
@@ -13,9 +13,9 @@ pub struct Connection(Async<UnixStream>);
 
 impl Connection {
     pub async fn new() -> Fallible<Self> {
-        let socket_path = get_socket_path().await?;
+        let socketpath = get_socketpath().await?;
         loop {
-            let stream = Async::<UnixStream>::connect(&socket_path).await;
+            let stream = Async::<UnixStream>::connect(&socketpath).await;
             if let Err(NotConnected) = stream.as_ref().map_err(|e| e.kind()) {
                 Timer::after(Duration::from_millis(100)).await;
             } else {

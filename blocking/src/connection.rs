@@ -1,5 +1,5 @@
 use super::common::receive_from_stream;
-use super::socket::get_socket_path;
+use super::socket::get_socketpath;
 use crate::{CommandType::*, Error::SubscriptionFailed, *};
 use serde::de::DeserializeOwned as Deserialize;
 use std::io::Write;
@@ -10,8 +10,8 @@ pub struct Connection(UnixStream);
 
 impl Connection {
     pub fn new() -> Fallible<Self> {
-        let socket_path = get_socket_path()?;
-        let unix_stream = UnixStream::connect(socket_path)?;
+        let socketpath = get_socketpath()?;
+        let unix_stream = UnixStream::connect(socketpath)?;
         Ok(Self(unix_stream))
     }
 

@@ -5,7 +5,7 @@ use std::path::PathBuf;
 use std::process::{Command, Stdio};
 use swayipc_types::Fallible;
 
-pub async fn get_socket_path() -> Fallible<PathBuf> {
+pub async fn get_socketpath() -> Fallible<PathBuf> {
     async {
         if let Ok(socketpath) = env::var("I3SOCK") {
             return Ok(socketpath);

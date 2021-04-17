@@ -5,11 +5,11 @@ use std::process::{Command, Stdio};
 use swayipc_types::Fallible;
 
 //TODO: try block instead of function
-pub fn get_socket_path() -> Fallible<PathBuf> {
-    _get_socket_path().map(PathBuf::from)
+pub fn get_socketpath() -> Fallible<PathBuf> {
+    _get_socketpath().map(PathBuf::from)
 }
 
-fn _get_socket_path() -> Fallible<String> {
+fn _get_socketpath() -> Fallible<String> {
     if let Ok(socketpath) = env::var("I3SOCK") {
         return Ok(socketpath);
     }
