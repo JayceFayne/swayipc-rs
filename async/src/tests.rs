@@ -1,16 +1,16 @@
 use crate::{Connection, EventType};
-use futures_lite::future;
+use async_io::block_on;
 
 #[test]
 fn connect() {
-    future::block_on(async {
+    block_on(async {
         Connection::new().await.unwrap();
     });
 }
 
 #[test]
 fn run_command_nothing() {
-    future::block_on(async {
+    block_on(async {
         let mut connection = Connection::new().await.unwrap();
         let result = connection.run_command("").await.unwrap();
         assert!(result.is_empty());
@@ -19,7 +19,7 @@ fn run_command_nothing() {
 
 #[test]
 fn run_command_single_success() {
-    future::block_on(async {
+    block_on(async {
         let mut connection = Connection::new().await.unwrap();
         let result = connection.run_command("exec /bin/true").await.unwrap();
         assert_eq!(result.len(), 1);
@@ -29,7 +29,7 @@ fn run_command_single_success() {
 
 #[test]
 fn run_command_multiple_success() {
-    future::block_on(async {
+    block_on(async {
         let mut connection = Connection::new().await.unwrap();
         let result = connection
             .run_command("exec /bin/true; exec /bin/true")
@@ -43,7 +43,7 @@ fn run_command_multiple_success() {
 
 #[test]
 fn run_command_fail() {
-    future::block_on(async {
+    block_on(async {
         let mut connection = Connection::new().await.unwrap();
         let result = connection.run_command("somerandomcommand").await.unwrap();
         assert_eq!(result.len(), 1);
@@ -53,7 +53,7 @@ fn run_command_fail() {
 
 #[test]
 fn get_workspaces() {
-    future::block_on(async {
+    block_on(async {
         Connection::new()
             .await
             .unwrap()
@@ -65,7 +65,7 @@ fn get_workspaces() {
 
 #[test]
 fn get_outputs() {
-    future::block_on(async {
+    block_on(async {
         Connection::new()
             .await
             .unwrap()
@@ -77,21 +77,21 @@ fn get_outputs() {
 
 #[test]
 fn get_tree() {
-    future::block_on(async {
+    block_on(async {
         Connection::new().await.unwrap().get_tree().await.unwrap();
     });
 }
 
 #[test]
 fn get_marks() {
-    future::block_on(async {
+    block_on(async {
         Connection::new().await.unwrap().get_marks().await.unwrap();
     });
 }
 
 #[test]
 fn get_bar_ids() {
-    future::block_on(async {
+    block_on(async {
         Connection::new()
             .await
             .unwrap()
@@ -103,7 +103,7 @@ fn get_bar_ids() {
 
 #[test]
 fn get_bar_ids_and_one_config() {
-    future::block_on(async {
+    block_on(async {
         let mut connection = Connection::new().await.unwrap();
         let ids = connection.get_bar_ids().await.unwrap();
         connection.get_bar_config(&ids[0]).await.unwrap();
@@ -112,7 +112,7 @@ fn get_bar_ids_and_one_config() {
 
 #[test]
 fn get_version() {
-    future::block_on(async {
+    block_on(async {
         Connection::new()
             .await
             .unwrap()
@@ -124,7 +124,7 @@ fn get_version() {
 
 #[test]
 fn get_binding_modes() {
-    future::block_on(async {
+    block_on(async {
         Connection::new()
             .await
             .unwrap()
@@ -136,14 +136,14 @@ fn get_binding_modes() {
 
 #[test]
 fn get_config() {
-    future::block_on(async {
+    block_on(async {
         Connection::new().await.unwrap().get_config().await.unwrap();
     });
 }
 
 #[test]
 fn send_tick() {
-    future::block_on(async {
+    block_on(async {
         let success = Connection::new()
             .await
             .unwrap()
@@ -156,7 +156,7 @@ fn send_tick() {
 
 #[test]
 fn sync() {
-    future::block_on(async {
+    block_on(async {
         let success = Connection::new().await.unwrap().sync().await.unwrap();
         assert!(!success, "sync should always return false on sway");
     });
@@ -164,7 +164,7 @@ fn sync() {
 
 #[test]
 fn get_binding_state() {
-    future::block_on(async {
+    block_on(async {
         Connection::new()
             .await
             .unwrap()
@@ -176,21 +176,21 @@ fn get_binding_state() {
 
 #[test]
 fn get_inputs() {
-    future::block_on(async {
+    block_on(async {
         Connection::new().await.unwrap().get_inputs().await.unwrap();
     });
 }
 
 #[test]
 fn get_seats() {
-    future::block_on(async {
+    block_on(async {
         Connection::new().await.unwrap().get_seats().await.unwrap();
     });
 }
 
 #[test]
 fn event_subscribe_all() {
-    future::block_on(async {
+    block_on(async {
         Connection::new()
             .await
             .unwrap()
@@ -212,7 +212,7 @@ fn event_subscribe_all() {
 
 #[test]
 fn find_in_tree() {
-    future::block_on(async {
+    block_on(async {
         assert!(Connection::new()
             .await
             .unwrap()
@@ -226,7 +226,7 @@ fn find_in_tree() {
 
 #[test]
 fn find_in_tree_comp() {
-    future::block_on(async {
+    block_on(async {
         assert_eq!(
             Connection::new()
                 .await
@@ -249,7 +249,7 @@ fn find_in_tree_comp() {
 
 #[test]
 fn find_focused_as_ref() {
-    future::block_on(async {
+    block_on(async {
         assert!(Connection::new()
             .await
             .unwrap()
@@ -263,7 +263,7 @@ fn find_focused_as_ref() {
 
 #[test]
 fn find_focused() {
-    future::block_on(async {
+    block_on(async {
         assert!(Connection::new()
             .await
             .unwrap()
@@ -277,7 +277,7 @@ fn find_focused() {
 
 #[test]
 fn find_in_tree_comp_find_focused() {
-    future::block_on(async {
+    block_on(async {
         assert_eq!(
             Connection::new()
                 .await
