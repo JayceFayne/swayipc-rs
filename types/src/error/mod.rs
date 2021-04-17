@@ -10,7 +10,7 @@ pub type Fallible<T> = Result<T, Error>;
 #[derive(Debug, ThisError)]
 pub enum Error {
     #[error(transparent)]
-    UnixStreamIO(#[from] std::io::Error),
+    Io(#[from] std::io::Error),
     #[error(transparent)]
     SerdeJson(#[from] serde_json::Error),
     #[error("unexpected magic string, expected 'i3-ipc' but got '{}'", String::from_utf8_lossy(.0))]
