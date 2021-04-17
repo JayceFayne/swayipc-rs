@@ -1,7 +1,8 @@
 use std::env;
+use std::io::Read;
 use std::path::PathBuf;
-use std::process::Command;
-use swayipc_types::{Error::SwayFailed, Fallible};
+use std::process::{Command, Stdio};
+use swayipc_types::Fallible;
 
 //TODO: try block instead of function
 pub fn get_socket_path() -> Fallible<PathBuf> {
@@ -9,23 +10,30 @@ pub fn get_socket_path() -> Fallible<PathBuf> {
 }
 
 fn _get_socket_path() -> Fallible<String> {
-    if let Ok(sockpath) = env::var("I3SOCK") {
-        return Ok(sockpath);
+    if let Ok(socketpath) = env::var("I3SOCK") {
+        return Ok(socketpath);
     }
-    if let Ok(sockpath) = env::var("SWAYSOCK") {
-        return Ok(sockpath);
+    if let Ok(socketpath) = env::var("SWAYSOCK") {
+        return Ok(socketpath);
     }
-    let output = Command::new("i3").arg("--get-socketpath").output()?;
-    if output.status.success() {
-        return Ok(String::from_utf8_lossy(&output.stdout)
-            .trim_end_matches('\n')
-            .to_owned());
+    if let Ok(socketpath) = spawn("i3") {
+        return Ok(socketpath);
     }
-    let output = Command::new("sway").arg("--get-socketpath").output()?;
-    if output.status.success() {
-        return Ok(String::from_utf8_lossy(&output.stdout)
-            .trim_end_matches('\n')
-            .to_owned());
+    if let Ok(socketpath) = spawn("sway") {
+        return Ok(socketpath);
     }
-    Err(SwayFailed(output.status.code().unwrap_or(0), output.stderr))
+    unreachable!()
+}
+
+fn spawn(wm: &str) -> Fallible<String> {
+    let mut child = Command::new(wm)
+        .arg("--get-socketpath")
+        .stdout(Stdio::piped())
+        .spawn()?;
+    let mut buf = String::new();
+    if let Some(mut stdout) = child.stdout.take() {
+        stdout.read_to_string(&mut buf)?;
+        buf.pop();
+    }
+    Ok(buf)
 }
