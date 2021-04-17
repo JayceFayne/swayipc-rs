@@ -21,8 +21,6 @@ pub enum Error {
     UnimplementedEvent(u32, Vec<u8>),
     #[error("failed to subscribe to events {0}")]
     SubscriptionFailed(String),
-    #[error("sway --get-socketpath returned with exit code {} and following stderr '{}'", .0, String::from_utf8_lossy(.1))]
-    SwayFailed(i32, Vec<u8>),
     #[error("command failed with '{0}'")]
     CommandFailed(String),
     #[error("command could not be parsed '{0}'")]
