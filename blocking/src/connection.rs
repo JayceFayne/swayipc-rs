@@ -10,7 +10,7 @@ pub struct Connection(UnixStream);
 
 impl Connection {
     pub fn new() -> Fallible<Self> {
-        let socketpath = get_socketpath()?;
+        let socketpath = get_socketpath();
         let unix_stream = UnixStream::connect(socketpath)?;
         Ok(Self(unix_stream))
     }

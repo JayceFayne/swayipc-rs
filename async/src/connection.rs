@@ -13,7 +13,7 @@ pub struct Connection(Async<UnixStream>);
 
 impl Connection {
     pub async fn new() -> Fallible<Self> {
-        let socketpath = get_socketpath().await?;
+        let socketpath = get_socketpath().await;
         loop {
             let stream = Async::<UnixStream>::connect(&socketpath).await;
             if matches!(stream.as_ref().map_err(|e| e.kind()), Err(NotConnected)) {

@@ -4,25 +4,18 @@ use std::path::PathBuf;
 use std::process::{Command, Stdio};
 use swayipc_types::Fallible;
 
-//TODO: try block instead of function
-pub fn get_socketpath() -> Fallible<PathBuf> {
-    _get_socketpath().map(PathBuf::from)
-}
-
-fn _get_socketpath() -> Fallible<String> {
-    if let Ok(socketpath) = env::var("I3SOCK") {
-        return Ok(socketpath);
-    }
-    if let Ok(socketpath) = env::var("SWAYSOCK") {
-        return Ok(socketpath);
-    }
-    if let Ok(socketpath) = spawn("i3") {
-        return Ok(socketpath);
-    }
-    if let Ok(socketpath) = spawn("sway") {
-        return Ok(socketpath);
-    }
-    unreachable!()
+pub fn get_socketpath() -> PathBuf {
+    PathBuf::from(if let Ok(socketpath) = env::var("I3SOCK") {
+        socketpath
+    } else if let Ok(socketpath) = env::var("SWAYSOCK") {
+        socketpath
+    } else if let Ok(socketpath) = spawn("i3") {
+        socketpath
+    } else if let Ok(socketpath) = spawn("sway") {
+        socketpath
+    } else {
+        unreachable!()
+    })
 }
 
 fn spawn(wm: &str) -> Fallible<String> {
@@ -35,5 +28,6 @@ fn spawn(wm: &str) -> Fallible<String> {
         stdout.read_to_string(&mut buf)?;
         buf.pop();
     }
+    child.wait()?;
     Ok(buf)
 }
