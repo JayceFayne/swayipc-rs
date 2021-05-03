@@ -10,7 +10,10 @@ fn main() -> Fallible<()> {
         while let Some(event) = events.next().await.transpose()? {
             match event {
                 Event::Window(w) => {
-                    println!("{}", w.container.name.unwrap_or("unnamed".to_owned()))
+                    println!(
+                        "{}",
+                        w.container.name.unwrap_or_else(|| "unnamed".to_owned())
+                    )
                 }
                 _ => unreachable!(),
             }
