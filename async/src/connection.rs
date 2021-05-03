@@ -16,7 +16,7 @@ impl Connection {
         let socketpath = get_socketpath().await?;
         loop {
             let stream = Async::<UnixStream>::connect(&socketpath).await;
-            if let Err(NotConnected) = stream.as_ref().map_err(|e| e.kind()) {
+            if matches!(stream.as_ref().map_err(|e| e.kind()), Err(NotConnected)) {
                 Timer::after(Duration::from_millis(100)).await;
             } else {
                 return Ok(Self(stream?));
