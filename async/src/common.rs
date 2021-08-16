@@ -3,7 +3,7 @@ use futures_lite::AsyncReadExt;
 use std::os::unix::net::UnixStream;
 use swayipc_types::{Error::InvalidMagic, Fallible, MAGIC};
 
-pub(crate) async fn receive_from_stream(
+pub(super) async fn receive_from_stream(
     stream: &mut Async<UnixStream>,
 ) -> Fallible<(u32, Vec<u8>)> {
     let mut magic_data = [0_u8; 6];

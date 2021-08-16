@@ -15,7 +15,7 @@ impl Connection {
     pub async fn new() -> Fallible<Self> {
         let socketpath = get_socketpath().await;
         loop {
-            let stream = Async::<UnixStream>::connect(&socketpath).await;
+            let stream = Async::<UnixStream>::connect(socketpath.as_path()).await;
             if matches!(stream.as_ref().map_err(|e| e.kind()), Err(NotConnected)) {
                 Timer::after(Duration::from_millis(100)).await;
             } else {
@@ -25,16 +25,18 @@ impl Connection {
     }
 
     async fn raw_command<D: Deserialize>(&mut self, command_type: CommandType) -> Fallible<D> {
-        self.0.write_all(&command_type.encode()).await?;
+        self.0.write_all(command_type.encode().as_slice()).await?;
         command_type.decode(receive_from_stream(&mut self.0).await?)
     }
 
-    async fn raw_command_with<D: Deserialize>(
+    async fn raw_command_with<D: Deserialize, T: AsRef<[u8]>>(
         &mut self,
         command_type: CommandType,
-        payload: &str,
+        payload: T,
     ) -> Fallible<D> {
-        self.0.write_all(&command_type.encode_with(payload)).await?;
+        self.0
+            .write_all(command_type.encode_with(payload).as_slice())
+            .await?;
         command_type.decode(receive_from_stream(&mut self.0).await?)
     }
 
@@ -48,13 +50,10 @@ impl Connection {
         self.raw_command(GetWorkspaces).await
     }
 
-    pub async fn subscribe(mut self, events: &[EventType]) -> Fallible<EventStream> {
-        let events = serde_json::ser::to_string(events)?;
-        if !self
-            .raw_command_with::<Success>(Subscribe, &events)
-            .await?
-            .success
-        {
+    pub async fn subscribe<T: AsRef<[EventType]>>(mut self, events: T) -> Fallible<EventStream> {
+        let events = serde_json::ser::to_string(events.as_ref())?;
+        let res: Success = self.raw_command_with(Subscribe, events.as_bytes()).await?;
+        if !res.success {
             return Err(SubscriptionFailed(events));
         }
         Ok(EventStream::new(self.0))

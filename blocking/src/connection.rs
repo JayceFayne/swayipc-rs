@@ -16,16 +16,17 @@ impl Connection {
     }
 
     fn raw_command<D: Deserialize>(&mut self, command_type: CommandType) -> Fallible<D> {
-        self.0.write_all(&command_type.encode())?;
+        self.0.write_all(command_type.encode().as_slice())?;
         command_type.decode(receive_from_stream(&mut self.0)?)
     }
 
-    fn raw_command_with<D: Deserialize>(
+    fn raw_command_with<D: Deserialize, T: AsRef<[u8]>>(
         &mut self,
         command_type: CommandType,
-        payload: &str,
+        payload: T,
     ) -> Fallible<D> {
-        self.0.write_all(&command_type.encode_with(payload))?;
+        self.0
+            .write_all(command_type.encode_with(payload).as_slice())?;
         command_type.decode(receive_from_stream(&mut self.0)?)
     }
 
@@ -38,12 +39,10 @@ impl Connection {
         self.raw_command(GetWorkspaces)
     }
 
-    pub fn subscribe(mut self, events: &[EventType]) -> Fallible<EventStream> {
-        let events = serde_json::ser::to_string(events)?;
-        if !self
-            .raw_command_with::<Success>(Subscribe, &events)?
-            .success
-        {
+    pub fn subscribe<T: AsRef<[EventType]>>(mut self, events: T) -> Fallible<EventStream> {
+        let events = serde_json::ser::to_string(events.as_ref())?;
+        let res: Success = self.raw_command_with(Subscribe, events.as_bytes())?;
+        if !res.success {
             return Err(SubscriptionFailed(events));
         }
         Ok(EventStream::new(self.0))

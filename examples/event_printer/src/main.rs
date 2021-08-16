@@ -12,7 +12,7 @@ fn main() -> Fallible<()> {
         EventType::BarConfigUpdate,
         EventType::Binding,
     ];
-    for event in Connection::new()?.subscribe(&subs)? {
+    for event in Connection::new()?.subscribe(subs)? {
         println!("{:?}\n", event?)
     }
     Ok(())

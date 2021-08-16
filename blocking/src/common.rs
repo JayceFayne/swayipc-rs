@@ -2,7 +2,7 @@ use std::io::Read;
 use std::os::unix::net::UnixStream;
 use swayipc_types::{Error::InvalidMagic, Fallible, MAGIC};
 
-pub(crate) fn receive_from_stream(stream: &mut UnixStream) -> Fallible<(u32, Vec<u8>)> {
+pub(super) fn receive_from_stream(stream: &mut UnixStream) -> Fallible<(u32, Vec<u8>)> {
     let mut magic_data = [0_u8; 6];
     stream.read_exact(&mut magic_data)?;
     if magic_data != MAGIC {

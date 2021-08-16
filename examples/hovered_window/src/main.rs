@@ -1,7 +1,7 @@
 use swayipc::{Connection, Event, EventType, Fallible};
 
 fn main() -> Fallible<()> {
-    for event in Connection::new()?.subscribe(&[EventType::Window])? {
+    for event in Connection::new()?.subscribe([EventType::Window])? {
         match event? {
             Event::Window(w) => println!(
                 "{}",

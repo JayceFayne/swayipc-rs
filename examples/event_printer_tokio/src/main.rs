@@ -14,7 +14,7 @@ async fn main() -> Fallible<()> {
         EventType::BarConfigUpdate,
         EventType::Binding,
     ];
-    let mut events = Connection::new().await?.subscribe(&subs).await?;
+    let mut events = Connection::new().await?.subscribe(subs).await?;
     while let Some(event) = events.next().await {
         println!("{:?}\n", event?)
     }

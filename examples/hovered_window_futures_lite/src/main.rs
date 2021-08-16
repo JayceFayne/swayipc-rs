@@ -5,7 +5,7 @@ fn main() -> Fallible<()> {
     block_on(async {
         let mut events = Connection::new()
             .await?
-            .subscribe(&[EventType::Window])
+            .subscribe([EventType::Window])
             .await?;
         while let Some(event) = events.next().await.transpose()? {
             match event {
