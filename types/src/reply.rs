@@ -163,8 +163,8 @@ pub struct Seat {
 #[non_exhaustive]
 #[derive(Debug, PartialEq, Deserialize)]
 pub struct Rect {
-    pub x: i32,
-    pub y: i32,
+    pub x: u64,
+    pub y: u64,
     pub width: i32,
     pub height: i32,
 }
