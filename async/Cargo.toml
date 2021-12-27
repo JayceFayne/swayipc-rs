@@ -1,6 +1,6 @@
 [package]
 name = "swayipc-async"
-version = "2.0.0-alpha.3"
+version = "2.0.0"
 authors = ["Jayce Fayne <jayce.fayne@mailbox.org>"]
 edition = "2018"
 description = "A library for controlling sway through its IPC interface"
@@ -11,7 +11,7 @@ keywords = ["sway", "swaywm", "swayipc","ipc", "async"]
 readme = "README.md"
 
 [dependencies]
-swayipc-types = { version = "1.0.0-alpha.3", path = "../types" }
+swayipc-types = { version = "1.0.0", path = "../types" }
 serde = "1.0.132"
 serde_json = "1.0.73"
 async-io  = "1.6.0"
