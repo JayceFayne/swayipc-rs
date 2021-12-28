@@ -21,19 +21,19 @@ pub enum CommandType {
 
 impl CommandType {
     pub fn encode(self) -> Vec<u8> {
-        IntoIterator::into_iter(crate::MAGIC)
-            .chain(IntoIterator::into_iter(0_u32.to_ne_bytes()))
-            .chain(IntoIterator::into_iter(u32::from(self).to_ne_bytes()))
+        crate::MAGIC
+            .into_iter()
+            .chain(0_u32.to_ne_bytes().into_iter())
+            .chain(u32::from(self).to_ne_bytes().into_iter())
             .collect()
     }
 
     pub fn encode_with<T: AsRef<[u8]>>(self, payload: T) -> Vec<u8> {
         let payload = payload.as_ref();
-        IntoIterator::into_iter(crate::MAGIC)
-            .chain(IntoIterator::into_iter(
-                (payload.len() as u32).to_ne_bytes(),
-            ))
-            .chain(IntoIterator::into_iter(u32::from(self).to_ne_bytes()))
+        crate::MAGIC
+            .into_iter()
+            .chain((payload.len() as u32).to_ne_bytes().into_iter())
+            .chain(u32::from(self).to_ne_bytes().into_iter())
             .chain(payload.iter().cloned())
             .collect()
     }
