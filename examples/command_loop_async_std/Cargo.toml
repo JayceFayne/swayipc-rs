@@ -6,4 +6,4 @@ edition = "2018"
 
 [dependencies]
 swayipc-async = { path = "../../async" }
-async-std = { version = "1.6.5", features = ["attributes"]}
+async-std = { version = "1.10.0", features = ["attributes"]}

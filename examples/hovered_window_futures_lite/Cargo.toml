@@ -6,4 +6,4 @@ edition = "2018"
 
 [dependencies]
 swayipc-async = { path = "../../async" }
-futures-lite = "1.11.2"
+futures-lite = "1.12.0"
