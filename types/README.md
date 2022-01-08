@@ -11,6 +11,10 @@
 
 A Rust library containing types used to control swaywm through its [IPC interface](https://github.com/swaywm/sway/blob/master/sway/sway-ipc.7.scd).
 
+## i3 compatibility
+
+[i3](https://github.com/i3/i3) compatibility is kept if possible even though this library primarily targets sway.
+
 ## Versioning
 
 This library targets the latest stable release of [sway](https://github.com/swaywm/sway).
