@@ -1,5 +1,9 @@
 use crate::{Connection, EventType};
+
+#[cfg(all(feature = "default-io", not(feature = "tokio")))]
 use async_io::block_on;
+#[cfg(feature = "tokio")]
+use tokio_test::block_on;
 
 #[test]
 fn connect() {

@@ -23,6 +23,17 @@ Examples of how to use the library can be found [here](../examples).
 
 This library targets the latest stable release of [sway](https://github.com/swaywm/sway).
 
+## Async runtime compatibility
+
+By default this library relies on `async-io` crate, which uses its own thread. If you use `tokio` runtime and would like to awoid spawning the additial thread, you can enable the `tokio` feature:
+
+```toml
+[dependencies.swayipc-async]
+version = "*"
+default-features = false
+features = ["tokio"]
+```
+
 ## Contributing
 
  If you find any errors in swayipc or just want to add a new feature feel free to [submit a PR](https://github.com/jaycefayne/swayipc-rs/pulls).

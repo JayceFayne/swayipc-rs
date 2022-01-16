@@ -7,13 +7,24 @@ description = "A library for controlling sway through its IPC interface"
 license = "MIT"
 repository = "https://github.com/jaycefayne/swayipc-rs"
 categories = ["network-programming"]
-keywords = ["sway", "swaywm", "swayipc","ipc", "async"]
+keywords = ["sway", "swaywm", "swayipc", "ipc", "async"]
 readme = "README.md"
 
 [dependencies]
 swayipc-types = { version = "1.0.0", path = "../types" }
 serde = "1.0.132"
 serde_json = "1.0.73"
-async-io  = "1.6.0"
 futures-lite = "1.12.0"
-async-pidfd = "0.1.4"
+
+async-io  = { version = "1.6.0", optional = true }
+async-pidfd = { version = "0.1.4", optional = true }
+
+tokio = { version = "1.15.0", features = ["net", "process", "time", "io-util"], optional = true }
+
+[dev-dependencies]
+async-io  = "1.6.0"
+tokio-test  = "0.4"
+
+[features]
+default = ["default-io"]
+default-io = ["async-io", "async-pidfd"]

@@ -1,22 +1,21 @@
 use super::common::receive_from_stream;
+use crate::runtime::Socket;
 use crate::{Event, Fallible};
-use async_io::Async;
 use futures_lite::future::Boxed;
 use futures_lite::ready;
 use futures_lite::stream::Stream;
-use std::os::unix::net::UnixStream;
 use std::pin::Pin;
 use std::task::{Context, Poll};
 
-pub struct EventStream(Boxed<(Async<UnixStream>, Fallible<Event>)>);
+pub struct EventStream(Boxed<(Socket, Fallible<Event>)>);
 
-async fn receive(mut stream: Async<UnixStream>) -> (Async<UnixStream>, Fallible<Event>) {
+async fn receive(mut stream: Socket) -> (Socket, Fallible<Event>) {
     let data = receive_from_stream(&mut stream).await;
     (stream, data.and_then(Event::decode))
 }
 
 impl EventStream {
-    pub(super) fn new(stream: Async<UnixStream>) -> Self {
+    pub(super) fn new(stream: Socket) -> Self {
         Self(Box::pin(receive(stream)))
     }
 }

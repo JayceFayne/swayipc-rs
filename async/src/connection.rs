@@ -1,23 +1,20 @@
 use super::common::receive_from_stream;
 use super::socket::get_socketpath;
+use crate::runtime::{sleep, AsyncWriteExt, Socket};
 use crate::{CommandType::*, Error::SubscriptionFailed, *};
-use async_io::{Async, Timer};
-use futures_lite::AsyncWriteExt;
 use serde::de::DeserializeOwned as Deserialize;
 use std::io::ErrorKind::NotConnected;
-use std::os::unix::net::UnixStream;
-use std::time::Duration;
 
 #[derive(Debug)]
-pub struct Connection(Async<UnixStream>);
+pub struct Connection(Socket);
 
 impl Connection {
     pub async fn new() -> Fallible<Self> {
         let socketpath = get_socketpath().await;
         loop {
-            let stream = Async::<UnixStream>::connect(socketpath.as_path()).await;
+            let stream = Socket::connect(socketpath.as_path()).await;
             if matches!(stream.as_ref().map_err(|e| e.kind()), Err(NotConnected)) {
-                Timer::after(Duration::from_millis(100)).await;
+                sleep(100).await
             } else {
                 return Ok(Self(stream?));
             }
@@ -115,13 +112,13 @@ impl Connection {
     }
 }
 
-impl From<Async<UnixStream>> for Connection {
-    fn from(unix_stream: Async<UnixStream>) -> Self {
-        Self(unix_stream)
+impl From<Socket> for Connection {
+    fn from(s: Socket) -> Self {
+        Self(s)
     }
 }
 
-impl From<Connection> for Async<UnixStream> {
+impl From<Connection> for Socket {
     fn from(connection: Connection) -> Self {
         connection.0
     }

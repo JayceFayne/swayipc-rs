@@ -1,11 +1,7 @@
-use async_io::Async;
-use futures_lite::AsyncReadExt;
-use std::os::unix::net::UnixStream;
+use crate::runtime::{AsyncReadExt, Socket};
 use swayipc_types::{Error::InvalidMagic, Fallible, MAGIC};
 
-pub(super) async fn receive_from_stream(
-    stream: &mut Async<UnixStream>,
-) -> Fallible<(u32, Vec<u8>)> {
+pub(super) async fn receive_from_stream(stream: &mut Socket) -> Fallible<(u32, Vec<u8>)> {
     let mut magic_data = [0_u8; 6];
     stream.read_exact(&mut magic_data).await?;
     if magic_data != MAGIC {

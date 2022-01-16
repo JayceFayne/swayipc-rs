@@ -4,6 +4,7 @@
 mod common;
 mod connection;
 mod event;
+mod runtime;
 mod socket;
 #[cfg(test)]
 mod tests;
