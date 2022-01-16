@@ -13,8 +13,10 @@ jobs:
         run: cargo build --release --verbose --package swayipc-types
       - name: Build blocking swayipc
         run: cargo build --release --verbose --package swayipc
-      - name: Build async swayipc
+      - name: Build async swayipc (async-io)
         run: cargo build --release --verbose --package swayipc-async
+      - name: Build async swayipc (tokio)
+        run: cargo build --release --verbose --package swayipc-async --no-default-features --features=tokio
       - name: Build command_loop example
         run: cargo build --release --verbose --package command_loop
       - name: Build command_loop_async_std example
