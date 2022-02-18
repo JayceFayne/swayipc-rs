@@ -22,11 +22,13 @@ pub struct Workspace {
     pub id: i64,
     pub num: i32,
     pub name: String,
+    #[serde(default)]
     pub layout: String,
     pub visible: bool,
     pub focused: bool,
     pub urgent: bool,
     pub representation: Option<String>,
+    #[serde(default)]
     pub orientation: String,
     pub rect: Rect,
     pub output: String,
