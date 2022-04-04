@@ -1,7 +1,10 @@
 use crate::reply::Node;
 
 impl Node {
-    pub fn find_as_ref(&self, predicate: fn(&Node) -> bool) -> Option<&Node> {
+    pub fn find_as_ref<F>(&self, predicate: F) -> Option<&Node>
+    where
+        F: Copy + Fn(&Node) -> bool,
+    {
         if predicate(self) {
             return Some(self);
         }
@@ -20,7 +23,10 @@ impl Node {
         None
     }
 
-    pub fn find(self, predicate: fn(&Node) -> bool) -> Option<Node> {
+    pub fn find<F>(self, predicate: F) -> Option<Node>
+    where
+        F: Copy + Fn(&Node) -> bool,
+    {
         if predicate(&self) {
             return Some(self);
         }
@@ -44,7 +50,10 @@ impl Node {
         None
     }
 
-    pub fn find_focused_as_ref(&self, predicate: fn(&Node) -> bool) -> Option<&Node> {
+    pub fn find_focused_as_ref<F>(&self, predicate: F) -> Option<&Node>
+    where
+        F: Copy + Fn(&Node) -> bool,
+    {
         if predicate(self) {
             return Some(self);
         }
@@ -65,7 +74,10 @@ impl Node {
         None
     }
 
-    pub fn find_focused(self, predicate: fn(&Node) -> bool) -> Option<Node> {
+    pub fn find_focused<F>(self, predicate: F) -> Option<Node>
+    where
+        F: Copy + Fn(&Node) -> bool,
+    {
         if predicate(&self) {
             return Some(self);
         }
