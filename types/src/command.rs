@@ -2,20 +2,36 @@
 #[non_exhaustive]
 #[derive(Debug, PartialEq, Copy, Clone)]
 pub enum CommandType {
+    /// Runs the payload as sway commands.
     RunCommand = 0,
+    /// Get the list of current workspaces.
     GetWorkspaces = 1,
+    /// Subscribe the IPC connection to the events listed in the payload.
     Subscribe = 2,
+    /// Get the list of current outputs.
     GetOutputs = 3,
+    /// Get the node layout tree.
     GetTree = 4,
+    /// Get the names of all the marks currently set.
     GetMarks = 5,
+    /// Get the specified bar config or a list of bar config names.
     GetBarConfig = 6,
+    /// Get the version of sway that owns the IPC socket.
     GetVersion = 7,
+    /// Get the list of binding mode names.
     GetBindingModes = 8,
+    /// Returns the config that was last loaded.
     GetConfig = 9,
+    /// Sends a tick event with the specified payload.
     SendTick = 10,
+    /// Replies failure object for i3 compatibility.
     Sync = 11,
+    /// Request the current binding state, e.g. the currently active binding
+    /// mode name.
     GetBindingState = 12,
+    /// Get the list of input devices.
     GetInputs = 100,
+    /// Get the list of seats.
     GetSeats = 101,
 }
 
