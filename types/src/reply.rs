@@ -46,7 +46,7 @@ pub struct Workspace {
     /// The name of the output that the workspace is on.
     pub output: String,
     #[serde(default)]
-    pub focus: Vec<i32>,
+    pub focus: Vec<i64>,
 }
 
 #[non_exhaustive]
@@ -104,7 +104,7 @@ pub struct Output {
     /// The bounds for the output consisting of x, y, width, and height.
     pub rect: Rect,
     #[serde(default)]
-    pub focus: Vec<i32>,
+    pub focus: Vec<i64>,
     #[serde(default)]
     pub focused: bool,
 }
@@ -225,7 +225,7 @@ pub struct Seat {
     /// The id of the node currently focused by the seat or 0 when the seat is
     /// not currently focused by a node (i.e. a surface layer or xwayland
     /// unmanaged has focus).
-    pub focus: i32,
+    pub focus: i64,
     /// An array of input devices that are attached to the seat. Currently, this
     /// is an array of objects that are identical to those returned by
     /// GET_INPUTS.
