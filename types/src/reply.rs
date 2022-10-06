@@ -1,7 +1,7 @@
 use serde::Deserialize;
 
 #[non_exhaustive]
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Deserialize)]
 pub struct CommandOutcome {
     /// A boolean indicating whether the command was successful.
     pub success: bool,
@@ -11,7 +11,7 @@ pub struct CommandOutcome {
 }
 
 #[non_exhaustive]
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Deserialize)]
 pub struct CommandError {
     /// A boolean indicating whether the reason the command failed was because
     /// the command was unknown or not able to be parsed.
@@ -22,7 +22,7 @@ pub struct CommandError {
 }
 
 #[non_exhaustive]
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Deserialize)]
 pub struct Workspace {
     pub id: i64,
     /// The workspace number or -1 for workspaces that do not start with a
@@ -50,14 +50,14 @@ pub struct Workspace {
 }
 
 #[non_exhaustive]
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Copy, Debug, Deserialize)]
 pub struct Success {
     /// A boolean value indicating whether the operation was successful or not.
     pub success: bool,
 }
 
 #[non_exhaustive]
-#[derive(Debug, PartialEq, Deserialize)]
+#[derive(Clone, Copy, Debug, PartialEq, Deserialize)]
 pub struct Mode {
     pub width: i32,
     pub height: i32,
@@ -65,7 +65,7 @@ pub struct Mode {
 }
 
 #[non_exhaustive]
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Deserialize)]
 pub struct Output {
     pub id: Option<i64>, // Sway doesn't give disabled outputs ids
     /// The name of the output. On DRM, this is the connector.
@@ -110,7 +110,7 @@ pub struct Output {
 }
 
 #[non_exhaustive]
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Copy, Debug, Deserialize)]
 pub struct Libinput {
     /// Whether events are being sent by the device. It can be enabled,
     /// disabled, or disabled_on_external_mouse.
@@ -147,7 +147,7 @@ pub struct Libinput {
 }
 
 #[non_exhaustive]
-#[derive(Debug, PartialEq, Deserialize)]
+#[derive(Clone, Copy, Debug, PartialEq, Deserialize)]
 #[serde(rename_all = "snake_case")]
 pub enum SendEvents {
     Enabled,
@@ -155,7 +155,7 @@ pub enum SendEvents {
     DisabledOnExternalMouse,
 }
 
-#[derive(Debug, PartialEq, Deserialize)]
+#[derive(Clone, Copy, Debug, PartialEq, Deserialize)]
 #[serde(rename_all = "lowercase")]
 pub enum EnabledOrDisabled {
     Enabled,
@@ -163,7 +163,7 @@ pub enum EnabledOrDisabled {
 }
 
 #[non_exhaustive]
-#[derive(Debug, PartialEq, Deserialize)]
+#[derive(Clone, Copy, Debug, PartialEq, Deserialize)]
 #[serde(rename_all = "snake_case")]
 pub enum ClickMethod {
     ButtonAreas,
@@ -172,7 +172,7 @@ pub enum ClickMethod {
 }
 
 #[non_exhaustive]
-#[derive(Debug, PartialEq, Deserialize)]
+#[derive(Clone, Copy, Debug, PartialEq, Deserialize)]
 #[serde(rename_all = "snake_case")]
 pub enum ScrollMethod {
     TwoFinger,
@@ -181,7 +181,7 @@ pub enum ScrollMethod {
     None,
 }
 
-#[derive(Debug, PartialEq, Deserialize)]
+#[derive(Clone, Copy, Debug, PartialEq, Deserialize)]
 #[serde(rename_all = "lowercase")]
 pub enum ButtonMapping {
     LMR,
@@ -189,7 +189,7 @@ pub enum ButtonMapping {
 }
 
 #[non_exhaustive]
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Deserialize)]
 pub struct Input {
     /// The identifier for the input device.
     pub identifier: String,
@@ -216,7 +216,7 @@ pub struct Input {
 }
 
 #[non_exhaustive]
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Deserialize)]
 pub struct Seat {
     /// The unique name for the seat.
     pub name: String,
@@ -234,7 +234,7 @@ pub struct Seat {
 }
 
 #[non_exhaustive]
-#[derive(Debug, PartialEq, Deserialize)]
+#[derive(Clone, Copy, Debug, PartialEq, Deserialize)]
 pub struct Rect {
     pub x: i32,
     pub y: i32,
@@ -243,7 +243,7 @@ pub struct Rect {
 }
 
 #[non_exhaustive]
-#[derive(Debug, PartialEq, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Deserialize)]
 pub struct WindowProperties {
     pub title: Option<String>,
     pub instance: Option<String>,
@@ -253,7 +253,7 @@ pub struct WindowProperties {
 }
 
 #[non_exhaustive]
-#[derive(Debug, PartialEq, Deserialize)]
+#[derive(Clone, Copy, Debug, PartialEq, Deserialize)]
 #[serde(rename_all = "lowercase")]
 pub enum UserIdleInhibitType {
     Focus,
@@ -264,7 +264,7 @@ pub enum UserIdleInhibitType {
 }
 
 #[non_exhaustive]
-#[derive(Debug, PartialEq, Deserialize)]
+#[derive(Clone, Copy, Debug, PartialEq, Deserialize)]
 #[serde(rename_all = "lowercase")]
 pub enum ApplicationIdleInhibitType {
     Enabled,
@@ -272,14 +272,14 @@ pub enum ApplicationIdleInhibitType {
 }
 
 #[non_exhaustive]
-#[derive(Debug, PartialEq, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Deserialize)]
 pub struct IdleInhibitors {
     pub application: ApplicationIdleInhibitType,
     pub user: UserIdleInhibitType,
 }
 
 #[non_exhaustive]
-#[derive(Debug, PartialEq, Deserialize)]
+#[derive(Clone, Copy, Debug, PartialEq, Deserialize)]
 #[serde(rename_all = "snake_case")]
 pub enum NodeType {
     Root,
@@ -291,7 +291,7 @@ pub enum NodeType {
 }
 
 #[non_exhaustive]
-#[derive(Debug, PartialEq, Deserialize)]
+#[derive(Clone, Copy, Debug, PartialEq, Deserialize)]
 #[serde(rename_all = "lowercase")]
 pub enum NodeBorder {
     Normal,
@@ -301,7 +301,7 @@ pub enum NodeBorder {
 }
 
 #[non_exhaustive]
-#[derive(Debug, PartialEq, Deserialize)]
+#[derive(Clone, Copy, Debug, PartialEq, Deserialize)]
 #[serde(rename_all = "lowercase")]
 pub enum NodeLayout {
     SplitH,
@@ -314,7 +314,7 @@ pub enum NodeLayout {
 }
 
 #[non_exhaustive]
-#[derive(Debug, PartialEq, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Deserialize)]
 pub struct Node {
     /// The internal unique ID for this node.
     pub id: i64,
@@ -393,7 +393,7 @@ pub struct Node {
 }
 
 #[non_exhaustive]
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Deserialize)]
 #[serde(rename_all = "lowercase")]
 pub struct ColorableBarPart {
     /// The color to use for the bar background on unfocused outputs.
@@ -450,7 +450,7 @@ pub struct ColorableBarPart {
 }
 
 #[non_exhaustive]
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Deserialize)]
 pub struct BarConfig {
     /// The bar ID.
     pub id: String,
@@ -485,14 +485,14 @@ pub struct BarConfig {
 }
 
 #[non_exhaustive]
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Deserialize)]
 pub struct BindingState {
     /// The currently active binding mode, as a string.
     pub name: String,
 }
 
 #[non_exhaustive]
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Copy, Debug, Deserialize)]
 #[serde(rename_all = "lowercase")]
 pub enum BarMode {
     Dock,
@@ -501,7 +501,7 @@ pub enum BarMode {
 }
 
 #[non_exhaustive]
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Copy, Debug, Deserialize)]
 pub struct Gaps {
     pub top: usize,
     pub bottom: usize,
@@ -510,7 +510,7 @@ pub struct Gaps {
 }
 
 #[non_exhaustive]
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Copy, Debug, Deserialize)]
 #[serde(rename_all = "lowercase")]
 pub enum Position {
     Bottom,
@@ -518,7 +518,7 @@ pub enum Position {
 }
 
 #[non_exhaustive]
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Deserialize)]
 pub struct Version {
     /// The major version of the sway process.
     pub major: i32,
@@ -534,14 +534,14 @@ pub struct Version {
 }
 
 #[non_exhaustive]
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Deserialize)]
 pub struct Config {
     /// A single string property containing the contents of the config.
     pub config: String,
 }
 
 #[non_exhaustive]
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Deserialize)]
 pub enum Event {
     /// Sent whenever an event involving a workspace occurs such as
     /// initialization of a new workspace or a different workspace gains focus.
@@ -566,7 +566,7 @@ pub enum Event {
 }
 
 #[non_exhaustive]
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Deserialize)]
 pub struct InputEvent {
     /// What has changed.
     pub change: InputChange,
@@ -576,7 +576,7 @@ pub struct InputEvent {
 }
 
 #[non_exhaustive]
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Copy, Debug, Deserialize)]
 #[serde(rename_all = "snake_case")]
 pub enum InputChange {
     /// The input device became available.
@@ -592,7 +592,7 @@ pub enum InputChange {
 }
 
 #[non_exhaustive]
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Deserialize)]
 pub struct BarStateUpdateEvent {
     /// The bar ID effected.
     pub id: String,
@@ -601,7 +601,7 @@ pub struct BarStateUpdateEvent {
 }
 
 #[non_exhaustive]
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Deserialize)]
 pub struct TickEvent {
     /// Whether this event was triggered by subscribing to the tick events.
     pub first: bool,
@@ -611,7 +611,7 @@ pub struct TickEvent {
 }
 
 #[non_exhaustive]
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Deserialize)]
 pub struct WorkspaceEvent {
     /// The type of change that occurred.
     pub change: WorkspaceChange,
@@ -624,7 +624,7 @@ pub struct WorkspaceEvent {
 }
 
 #[non_exhaustive]
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Deserialize)]
 pub struct ModeEvent {
     /// The binding mode that became active.
     pub change: String,
@@ -633,7 +633,7 @@ pub struct ModeEvent {
 }
 
 #[non_exhaustive]
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Deserialize)]
 pub struct WindowEvent {
     /// The type of change that occurred.
     pub change: WindowChange,
@@ -642,7 +642,7 @@ pub struct WindowEvent {
 }
 
 #[non_exhaustive]
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Deserialize)]
 pub struct BindingEvent {
     /// The change that occurred for the binding. Currently this will only be
     /// run.
@@ -652,7 +652,7 @@ pub struct BindingEvent {
 }
 
 #[non_exhaustive]
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Deserialize)]
 pub struct BindingEventOps {
     /// The command associated with the binding.
     pub command: String,
@@ -673,14 +673,14 @@ pub struct BindingEventOps {
 }
 
 #[non_exhaustive]
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Copy, Debug, Deserialize)]
 pub struct ShutdownEvent {
     /// The reason for the shutdown.
     pub change: ShutdownChange,
 }
 
 #[non_exhaustive]
-#[derive(Debug, PartialEq, Deserialize)]
+#[derive(Clone, Copy, Debug, PartialEq, Deserialize)]
 #[serde(rename_all = "lowercase")]
 pub enum WorkspaceChange {
     /// The workspace was created.
@@ -701,7 +701,7 @@ pub enum WorkspaceChange {
 }
 
 #[non_exhaustive]
-#[derive(Debug, PartialEq, Deserialize)]
+#[derive(Clone, Copy, Debug, PartialEq, Deserialize)]
 #[serde(rename_all = "snake_case")]
 pub enum WindowChange {
     /// The view was created.
@@ -725,7 +725,7 @@ pub enum WindowChange {
 }
 
 #[non_exhaustive]
-#[derive(Debug, PartialEq, Deserialize)]
+#[derive(Clone, Copy, Debug, PartialEq, Deserialize)]
 #[serde(rename_all = "lowercase")]
 pub enum InputType {
     Keyboard,
@@ -733,21 +733,21 @@ pub enum InputType {
 }
 
 #[non_exhaustive]
-#[derive(Debug, PartialEq, Deserialize)]
+#[derive(Clone, Copy, Debug, PartialEq, Deserialize)]
 #[serde(rename_all = "lowercase")]
 pub enum BindingChange {
     Run,
 }
 
 #[non_exhaustive]
-#[derive(Debug, PartialEq, Deserialize)]
+#[derive(Clone, Copy, Debug, PartialEq, Deserialize)]
 #[serde(rename_all = "lowercase")]
 pub enum ShutdownChange {
     Exit,
 }
 
 #[non_exhaustive]
-#[derive(Debug, PartialEq, Deserialize)]
+#[derive(Clone, Copy, Debug, PartialEq, Deserialize)]
 #[serde(rename_all = "snake_case")]
 pub enum ShellType {
     XdgShell,
