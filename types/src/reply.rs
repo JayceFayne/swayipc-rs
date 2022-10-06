@@ -390,6 +390,8 @@ pub struct Node {
     pub shell: Option<ShellType>,
     /// (Only views) Whether the node is visible.
     pub visible: Option<bool>,
+    /// (Only workspaces) Name of the output the node is located on.
+    pub output: Option<String>,
 }
 
 #[non_exhaustive]
