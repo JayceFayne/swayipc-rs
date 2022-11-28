@@ -315,6 +315,16 @@ pub enum NodeLayout {
 }
 
 #[non_exhaustive]
+#[derive(Clone, Copy, Debug, PartialEq, Deserialize, Serialize)]
+#[serde(rename_all = "snake_case")]
+pub enum Floating {
+    AutoOn,
+    AutoOff,
+    UserOn,
+    UserOff,
+}
+
+#[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Deserialize, Serialize)]
 pub struct Node {
     /// The internal unique ID for this node.
@@ -353,6 +363,8 @@ pub struct Node {
     pub focused: bool,
     /// Array of child node IDs in the current focus order.
     pub focus: Vec<i64>,
+    /// Floating state of container, i3 specific property
+    pub floating: Option<Floating>,
     /// The tiling children nodes for the node.
     #[serde(default)]
     pub nodes: Vec<Node>,
