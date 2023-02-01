@@ -11,6 +11,7 @@ impl Event {
         let event_type = (payload_type << 1) >> 1;
         Ok(match event_type {
             0 => Workspace(serde_json::from_slice(&payload)?),
+            1 => Output(serde_json::from_slice(&payload)?),
             2 => Mode(serde_json::from_slice(&payload)?),
             3 => Window(serde_json::from_slice(&payload)?),
             4 => BarConfigUpdate(serde_json::from_slice(&payload)?),

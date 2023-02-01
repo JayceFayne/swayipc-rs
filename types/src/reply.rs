@@ -548,6 +548,8 @@ pub enum Event {
     /// Sent whenever an event involving a workspace occurs such as
     /// initialization of a new workspace or a different workspace gains focus.
     Workspace(Box<WorkspaceEvent>),
+    /// Sent whenever an output is added, removed, or its configuration is changed.
+    Output(OutputEvent),
     /// Sent whenever the binding mode changes.
     Mode(ModeEvent),
     /// Sent whenever an event involving a view occurs such as being reparented,
@@ -623,6 +625,21 @@ pub struct WorkspaceEvent {
     /// For a focus change, this is will be an object representing the workspace
     /// being switched from. Otherwise, it is null.
     pub old: Option<Node>, //Only None if WorkspaceChange::Reload
+}
+
+#[non_exhaustive]
+#[derive(Clone, Copy, Debug, PartialEq, Deserialize, Serialize)]
+#[serde(rename_all = "lowercase")]
+pub enum OutputChange {
+    /// We don't know what exactly changed.
+    Unspecified,
+}
+
+#[non_exhaustive]
+#[derive(Clone, Debug, Deserialize, Serialize)]
+pub struct OutputEvent {
+    /// The type of change that occurred.
+    pub change: OutputChange,
 }
 
 #[non_exhaustive]
