@@ -7,6 +7,8 @@ pub enum EventType {
     /// Sent whenever an event involving a workspace occurs such as
     /// initialization of a new workspace or a different workspace gains focus.
     Workspace,
+    /// Sent whenever an output is added, removed, or its configuration is changed.
+    Output,
     /// Sent whenever the binding mode changes.
     Mode,
     /// Sent whenever an event involving a view occurs such as being reparented,
