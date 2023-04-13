@@ -2,20 +2,15 @@ use std::env;
 use std::io::Read;
 use std::path::PathBuf;
 use std::process::{Command, Stdio};
-use swayipc_types::Fallible;
+use swayipc_types::{Error, Fallible};
 
-pub fn get_socketpath() -> PathBuf {
-    PathBuf::from(if let Ok(socketpath) = env::var("I3SOCK") {
-        socketpath
-    } else if let Ok(socketpath) = env::var("SWAYSOCK") {
-        socketpath
-    } else if let Ok(socketpath) = spawn("i3") {
-        socketpath
-    } else if let Ok(socketpath) = spawn("sway") {
-        socketpath
-    } else {
-        unreachable!()
-    })
+pub fn get_socketpath() -> Fallible<PathBuf> {
+    env::var("I3SOCK")
+        .or_else(|_| env::var("SWAYSOCK"))
+        .or_else(|_| spawn("i3"))
+        .or_else(|_| spawn("sway"))
+        .map_err(|_| Error::SocketNotFound)
+        .map(PathBuf::from)
 }
 
 fn spawn(wm: &str) -> Fallible<String> {

@@ -25,4 +25,6 @@ pub enum Error {
     CommandFailed(String),
     #[error("command could not be parsed '{0}'")]
     CommandParse(String),
+    #[error("could not find the socket for neither i3 nor sway")]
+    SocketNotFound,
 }
