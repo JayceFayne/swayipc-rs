@@ -14,7 +14,7 @@ pub struct Connection(Async<UnixStream>);
 impl Connection {
     /// Creates a new async `Connection` to sway-ipc.
     pub async fn new() -> Fallible<Self> {
-        let socketpath = get_socketpath().await;
+        let socketpath = get_socketpath().await?;
         loop {
             let stream = Async::<UnixStream>::connect(socketpath.as_path()).await;
             if matches!(stream.as_ref().map_err(|e| e.kind()), Err(NotConnected)) {

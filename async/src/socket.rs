@@ -4,20 +4,21 @@ use futures_lite::AsyncReadExt;
 use std::env;
 use std::path::PathBuf;
 use std::process::{Command, Stdio};
-use swayipc_types::Fallible;
+use swayipc_types::{Error, Fallible};
 
-pub async fn get_socketpath() -> PathBuf {
-    PathBuf::from(if let Ok(socketpath) = env::var("I3SOCK") {
-        socketpath
-    } else if let Ok(socketpath) = env::var("SWAYSOCK") {
-        socketpath
+pub async fn get_socketpath() -> Fallible<PathBuf> {
+    if let Ok(socketpath) = env::var("I3SOCK") {
+        Ok(socketpath)
+    } else if let Ok(socketpath) = env::var("SWAYLOCK") {
+        Ok(socketpath)
     } else if let Ok(socketpath) = spawn("i3").await {
-        socketpath
+        Ok(socketpath)
     } else if let Ok(socketpath) = spawn("sway").await {
-        socketpath
+        Ok(socketpath)
     } else {
-        unreachable!()
-    })
+        Err(Error::SocketNotFound)
+    }
+    .map(PathBuf::from)
 }
 
 async fn spawn(wm: &str) -> Fallible<String> {
