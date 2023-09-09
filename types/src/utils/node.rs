@@ -116,9 +116,7 @@ impl Node {
                 match self.queue.pop() {
                     None => None,
                     Some(result) => {
-                        for node in result.nodes.iter() {
-                            self.queue.push(node);
-                        }
+                        self.queue.extend(result.nodes.iter());
                         Some(result)
                     }
                 }
