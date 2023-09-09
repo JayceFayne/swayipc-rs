@@ -104,7 +104,7 @@ impl Node {
         None
     }
 
-    pub fn iter<'a>(&'a self) -> impl Iterator<Item = &'a Node> + 'a {
+    pub fn iter(&self) -> impl Iterator<Item = &Node> {
         struct NodeIterator<'a> {
             queue: Vec<&'a Node>,
         }
@@ -123,7 +123,7 @@ impl Node {
             }
         }
 
-        NodeIterator { queue: vec![&self] }
+        NodeIterator { queue: vec![self] }
     }
 }
 
