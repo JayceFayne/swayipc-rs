@@ -104,26 +104,26 @@ impl Node {
         None
     }
 
-    pub fn iter(&self) -> impl Iterator<Item = &Node> {
-        struct NodeIterator<'a> {
-            queue: Vec<&'a Node>,
-        }
+    pub fn iter(&self) -> NodeIterator<'_> {
+        NodeIterator { queue: vec![self] }
+    }
+}
 
-        impl<'a> Iterator for NodeIterator<'a> {
-            type Item = &'a Node;
+pub struct NodeIterator<'a> {
+    queue: Vec<&'a Node>,
+}
 
-            fn next(&mut self) -> Option<&'a Node> {
-                match self.queue.pop() {
-                    None => None,
-                    Some(result) => {
-                        self.queue.extend(result.nodes.iter());
-                        Some(result)
-                    }
-                }
+impl<'a> Iterator for NodeIterator<'a> {
+    type Item = &'a Node;
+
+    fn next(&mut self) -> Option<&'a Node> {
+        match self.queue.pop() {
+            None => None,
+            Some(result) => {
+                self.queue.extend(result.nodes.iter());
+                Some(result)
             }
         }
-
-        NodeIterator { queue: vec![self] }
     }
 }
 
