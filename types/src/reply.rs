@@ -249,6 +249,7 @@ pub struct WindowProperties {
     pub instance: Option<String>,
     pub class: Option<String>,
     pub window_role: Option<String>,
+    pub window_type: Option<String>,
     pub transient_for: Option<i32>,
 }
 
