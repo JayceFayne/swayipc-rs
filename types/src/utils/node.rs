@@ -165,6 +165,8 @@ mod tests {
             sticky: false,
             representation: None,
             fullscreen_mode: None,
+            floating: None,
+            scratchpad_state: None,
             app_id: None,
             pid: None,
             window: None,

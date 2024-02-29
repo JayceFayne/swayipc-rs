@@ -325,6 +325,14 @@ pub enum Floating {
 }
 
 #[non_exhaustive]
+#[derive(Clone, Copy, Debug, PartialEq, Deserialize, Serialize)]
+#[serde(rename_all = "lowercase")]
+pub enum ScratchpadState {
+    Fresh,
+    None,
+}
+
+#[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Deserialize, Serialize)]
 pub struct Node {
     /// The internal unique ID for this node.
@@ -376,9 +384,12 @@ pub struct Node {
     /// that can be used as an aid in submitting reproduction steps for bug
     /// reports.
     pub representation: Option<String>,
-    /// (Only containers and views) The fullscreen mode of the node. 0 means
+    /// (Only views) The fullscreen mode of the node. 0 means
     /// none, 1 means full workspace, and 2 means global fullscreen.
     pub fullscreen_mode: Option<u8>,
+    /// (Only views) For an xdg-shell and xwayland view, whether the window is in the scratchpad.
+    /// Otherwise, null.
+    pub scratchpad_state: Option<ScratchpadState>,
     /// (Only views) For an xdg-shell view, the name of the application, if set.
     /// Otherwise, null.
     pub app_id: Option<String>,
