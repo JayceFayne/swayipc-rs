@@ -120,7 +120,8 @@ impl<'a> Iterator for NodeIterator<'a> {
         match self.queue.pop() {
             None => None,
             Some(result) => {
-                self.queue.extend(result.nodes.iter());
+                self.queue
+                    .extend(result.nodes.iter().chain(result.floating_nodes.iter()));
                 Some(result)
             }
         }
