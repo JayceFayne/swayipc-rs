@@ -28,3 +28,20 @@ pub enum EventType {
     /// Sent when something related to input devices changes.
     Input,
 }
+
+impl crate::Event {
+    pub fn event_type(&self) -> EventType {
+        match self {
+            crate::Event::Workspace(_) => EventType::Workspace,
+            crate::Event::Mode(_) => EventType::Mode,
+            crate::Event::Window(_) => EventType::Window,
+            crate::Event::BarConfigUpdate(_) => EventType::BarConfigUpdate,
+            crate::Event::Binding(_) => EventType::Binding,
+            crate::Event::Shutdown(_) => EventType::Shutdown,
+            crate::Event::Tick(_) => EventType::Tick,
+            crate::Event::BarStateUpdate(_) => EventType::BarStateUpdate,
+            crate::Event::Input(_) => EventType::Input,
+            crate::Event::Output(_) => EventType::Output,
+        }
+    }
+}
