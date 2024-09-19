@@ -328,8 +328,9 @@ pub enum Floating {
 #[derive(Clone, Copy, Debug, PartialEq, Deserialize, Serialize)]
 #[serde(rename_all = "lowercase")]
 pub enum ScratchpadState {
-    Fresh,
     None,
+    Fresh,
+    Changed,
 }
 
 #[non_exhaustive]
