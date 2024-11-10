@@ -195,10 +195,6 @@ pub struct Input {
     pub identifier: String,
     /// The human readable name for the device.
     pub name: String,
-    /// The vendor code for the input device.
-    pub vendor: Option<i32>,
-    /// The product code for the input device.
-    pub product: Option<i32>,
     /// The device type.  Currently this can be keyboard, pointer, touch,
     /// tablet_tool, tablet_pad, or switch.
     #[serde(rename = "type")]
@@ -213,6 +209,10 @@ pub struct Input {
     /// (Only libinput devices) An object describing the current device
     /// settings. See below for more information.
     pub libinput: Option<Libinput>,
+    /// (Only libinput devices) The vendor code for the input device.
+    pub vendor: Option<i32>,
+    /// (Only libinput devices) The product code for the input device.
+    pub product: Option<i32>,
 }
 
 #[non_exhaustive]
