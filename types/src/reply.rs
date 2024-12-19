@@ -486,7 +486,7 @@ pub struct BarConfig {
     /// The bar's position.  It can currently either be bottom or top.
     pub position: Position,
     /// The command which should be run to generate the status line.
-    pub status_command: String,
+    pub status_command: Option<String>,
     /// The font to use for the text on the bar.
     pub font: String,
     /// Whether to display the workspace buttons on the bar.
