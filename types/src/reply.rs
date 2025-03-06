@@ -121,8 +121,8 @@ pub struct Libinput {
     pub tap_button_mapping: Option<ButtonMapping>,
     /// Whether tap-and-drag is enabled. It can be enabled or disabled.
     pub tap_drag: Option<EnabledOrDisabled>,
-    /// Whether drag-lock is enabled. It can be enabled or disabled.
-    pub tap_drag_lock: Option<EnabledOrDisabled>,
+    /// Whether drag-lock is enabled. It can be enabled, disabled or enabled_sticky.
+    pub tap_drag_lock: Option<DragLock>,
     /// The pointer-acceleration in use.
     pub accel_speed: Option<f64>,
     /// Whether natural scrolling is enabled. It can be enabled or disabled.
@@ -186,6 +186,14 @@ pub enum ScrollMethod {
 pub enum ButtonMapping {
     LMR,
     LRM,
+}
+
+#[derive(Clone, Copy, Debug, PartialEq, Deserialize, Serialize)]
+#[serde(rename_all = "snake_case")]
+pub enum DragLock {
+    Enabled,
+    Disabled,
+    EnabledSticky,
 }
 
 #[non_exhaustive]
