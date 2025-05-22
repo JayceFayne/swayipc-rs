@@ -1,5 +1,5 @@
 use async_io::Async;
-use async_pidfd_next::AsyncPidFd;
+use async_pidfd::AsyncPidFd;
 use futures_lite::AsyncReadExt;
 use std::env;
 use std::path::PathBuf;
