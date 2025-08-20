@@ -9,7 +9,7 @@ use swayipc_types::{Error, Fallible};
 pub async fn get_socketpath() -> Fallible<PathBuf> {
     if let Ok(socketpath) = env::var("I3SOCK") {
         Ok(socketpath)
-    } else if let Ok(socketpath) = env::var("SWAYLOCK") {
+    } else if let Ok(socketpath) = env::var("SWAYSOCK") {
         Ok(socketpath)
     } else if let Ok(socketpath) = spawn("i3").await {
         Ok(socketpath)
