@@ -1,6 +1,6 @@
 [package]
 name = "swayipc-async"
-version = "2.1.0"
+version = "2.1.1"
 authors = ["Jayce Fayne <jayce.fayne@mailbox.org>"]
 edition = "2021"
 description = "A library for controlling sway through its IPC interface"
