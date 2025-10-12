@@ -77,8 +77,13 @@ pub struct Output {
     /// The output's serial number as a hexa‐ decimal string.
     pub serial: String,
     /// Whether this output is active/enabled.
+    #[serde(default)]
     pub active: bool,
+    /// Whether this is a non-desktop output (e.g. VR headset).
+    #[serde(default)]
+    pub non_desktop: bool,
     /// Whether this output is on/off (via DPMS).
+    #[serde(default)]
     pub dpms: bool,
     /// For i3 compatibility, this will be false. It does not make sense in
     /// Wayland.
@@ -102,6 +107,7 @@ pub struct Output {
     /// refresh.
     pub current_mode: Option<Mode>,
     /// The bounds for the output consisting of x, y, width, and height.
+    #[serde(default)]
     pub rect: Rect,
     #[serde(default)]
     pub focus: Vec<i64>,
@@ -242,7 +248,7 @@ pub struct Seat {
 }
 
 #[non_exhaustive]
-#[derive(Clone, Copy, Debug, PartialEq, Deserialize, Serialize)]
+#[derive(Clone, Copy, Debug, Default, PartialEq, Deserialize, Serialize)]
 pub struct Rect {
     pub x: i32,
     pub y: i32,
