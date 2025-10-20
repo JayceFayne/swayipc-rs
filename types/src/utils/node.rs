@@ -179,6 +179,11 @@ mod tests {
             shell: None,
             visible: None,
             output: None,
+            sandbox_engine: None,
+            sandbox_app_id: None,
+            sandbox_instance_id: None,
+            tag: None,
+            foreign_toplevel_identifier: None,
         }
     }
 
