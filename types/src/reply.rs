@@ -510,6 +510,9 @@ pub struct BarConfig {
     pub font: String,
     /// Whether to display the workspace buttons on the bar.
     pub workspace_buttons: bool,
+    /// Minimum width in px for the workspace buttons on the bar
+    #[serde(default)]
+    pub workspace_min_width: usize,
     /// Whether to display the current binding mode on the bar.
     pub binding_mode_indicator: bool,
     /// For i3 compatibility, this will be the boolean value false.
