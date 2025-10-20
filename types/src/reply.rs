@@ -150,6 +150,8 @@ pub struct Libinput {
     /// The scroll button to use when scroll_method is on_button_down.  This
     /// will be given as an input event code.
     pub scroll_button: Option<i32>,
+    /// Whether scroll button lock is enabled.
+    pub scroll_button_lock: Option<EnabledOrDisabled>,
     /// Whether disable-while-typing is enabled. It can be enabled or disabled.
     pub dwt: Option<EnabledOrDisabled>,
     /// An array of 6 floats representing the calibration matrix for absolute
