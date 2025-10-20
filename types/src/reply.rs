@@ -118,6 +118,9 @@ pub struct Output {
     pub focus: Vec<i64>,
     #[serde(default)]
     pub focused: bool,
+    /// Whether HDR is enabled
+    #[serde(default)]
+    pub hdr: bool,
 }
 
 #[non_exhaustive]
