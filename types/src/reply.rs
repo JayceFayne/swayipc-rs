@@ -225,6 +225,9 @@ pub struct Input {
     pub xkb_layout_names: Vec<String>,
     /// (Only keyboards) The index of the active keyboard layout in use.
     pub xkb_active_layout_index: Option<i32>,
+    /// (Only pointers) Multiplier applied on scroll event values.
+    #[serde(default)]
+    pub scroll_factor: f64,
     /// (Only libinput devices) An object describing the current device
     /// settings. See below for more information.
     pub libinput: Option<Libinput>,
