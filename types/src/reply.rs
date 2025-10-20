@@ -85,6 +85,9 @@ pub struct Output {
     /// Whether this output is on/off (via DPMS).
     #[serde(default)]
     pub dpms: bool,
+    /// Whether this output is on/off
+    #[serde(default)]
+    pub power: bool,
     /// For i3 compatibility, this will be false. It does not make sense in
     /// Wayland.
     pub primary: bool,
