@@ -446,6 +446,8 @@ pub struct Node {
     pub sandbox_app_id: Option<String>,
     /// (Only views) The instance ID provided by the associated sandbox engine.
     pub sandbox_instance_id: Option<String>,
+    /// (Only windows) For an xdg-shell window, tag of the toplevel, if set.
+    pub tag: Option<String>,
     /// (Only views) The shell of the view, such as xdg_shell or xwayland.
     pub shell: Option<ShellType>,
     /// (Only views) The ext-foreign-toplevel-list-v1 toplevel identifier of this node.
