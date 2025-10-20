@@ -142,6 +142,8 @@ pub struct Libinput {
     pub left_handed: Option<EnabledOrDisabled>,
     /// The click method in use. It can be none, button_areas, or clickfinger.
     pub click_method: Option<ClickMethod>,
+    /// The finger to button mapping in use for clickfinger.
+    pub click_button_map: Option<ButtonMapping>,
     /// Whether middle emulation is enabled.  It can be enabled or disabled.
     pub middle_emulation: Option<EnabledOrDisabled>,
     /// The scroll method in use. It can be none, two_finger, edge, or
