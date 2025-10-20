@@ -99,6 +99,8 @@ pub struct Output {
     /// The transform currently in use for the output. This can be normal, 90,
     /// 180, 270, flipped-90, flipped-180, or flipped-270.
     pub transform: Option<String>,
+    /// Status of adaptive sync
+    pub adaptive_sync_status: Option<EnabledOrDisabled>,
     /// The workspace currently visible on the output or null for disabled
     /// outputs.
     pub current_workspace: Option<String>,
