@@ -445,6 +445,8 @@ pub struct Node {
     pub sandbox_instance_id: Option<String>,
     /// (Only views) The shell of the view, such as xdg_shell or xwayland.
     pub shell: Option<ShellType>,
+    /// (Only views) The ext-foreign-toplevel-list-v1 toplevel identifier of this node.
+    pub foreign_toplevel_identifier: Option<String>,
     /// (Only views) Whether the node is visible.
     pub visible: Option<bool>,
     /// (Only workspaces) Name of the output the node is located on.
