@@ -2,7 +2,7 @@
 name = "swayipc-types"
 version = "1.4.2"
 authors = ["Jayce Fayne <jayce.fayne@mailbox.org>"]
-edition = "2021"
+edition = "2024"
 description = "A library containing Type defintions from sway's IPC interface"
 license = "MIT"
 repository = "https://github.com/jaycefayne/swayipc-rs"

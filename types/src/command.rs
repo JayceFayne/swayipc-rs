@@ -39,8 +39,8 @@ impl CommandType {
     pub fn encode(self) -> Vec<u8> {
         crate::MAGIC
             .into_iter()
-            .chain(0_u32.to_ne_bytes().into_iter())
-            .chain(u32::from(self).to_ne_bytes().into_iter())
+            .chain(0_u32.to_ne_bytes())
+            .chain(u32::from(self).to_ne_bytes())
             .collect()
     }
 
@@ -48,8 +48,8 @@ impl CommandType {
         let payload = payload.as_ref();
         crate::MAGIC
             .into_iter()
-            .chain((payload.len() as u32).to_ne_bytes().into_iter())
-            .chain(u32::from(self).to_ne_bytes().into_iter())
+            .chain((payload.len() as u32).to_ne_bytes())
+            .chain(u32::from(self).to_ne_bytes())
             .chain(payload.iter().cloned())
             .collect()
     }
