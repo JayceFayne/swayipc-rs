@@ -437,6 +437,12 @@ pub struct Node {
     /// idle inhibitors.  application can be enabled or none.  user can be
     /// focus, fullscreen, open, visible or none.
     pub idle_inhibitors: Option<IdleInhibitors>,
+    /// (Only views) The associated sandbox engine.
+    pub sandbox_engine: Option<String>,
+    /// Only views) The app ID provided by the associated sandbox engine.
+    pub sandbox_app_id: Option<String>,
+    /// (Only views) The instance ID provided by the associated sandbox engine.
+    pub sandbox_instance_id: Option<String>,
     /// (Only views) The shell of the view, such as xdg_shell or xwayland.
     pub shell: Option<ShellType>,
     /// (Only views) Whether the node is visible.
