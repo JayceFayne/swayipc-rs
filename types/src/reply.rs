@@ -31,7 +31,7 @@ pub struct Workspace {
     /// The name of the workspace.
     pub name: String,
     #[serde(default)]
-    pub layout: String,
+    pub layout: NodeLayout,
     /// Whether the workspace is currently visible on any output.
     pub visible: bool,
     /// Whether the workspace is currently focused by the default seat (seat0).
@@ -331,7 +331,7 @@ pub enum NodeBorder {
 }
 
 #[non_exhaustive]
-#[derive(Clone, Copy, Debug, PartialEq, Deserialize, Serialize)]
+#[derive(Clone, Copy, Debug, PartialEq, Deserialize, Serialize, Default)]
 #[serde(rename_all = "lowercase")]
 pub enum NodeLayout {
     SplitH,
@@ -340,6 +340,8 @@ pub enum NodeLayout {
     Tabbed,
     Output,
     Dockarea, // i3-specific
+    #[default]
+    None,
     None,
 }
 
