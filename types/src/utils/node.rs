@@ -134,6 +134,7 @@ mod tests {
     use crate::NodeBorder;
     use crate::NodeLayout;
     use crate::NodeType;
+    use crate::Orientation;
     use crate::Rect;
 
     fn rect() -> Rect {
@@ -184,6 +185,7 @@ mod tests {
             sandbox_instance_id: None,
             tag: None,
             foreign_toplevel_identifier: None,
+            orientation: Orientation::None,
         }
     }
 

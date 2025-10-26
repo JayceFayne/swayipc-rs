@@ -39,8 +39,9 @@ pub struct Workspace {
     /// Whether a view on the workspace has the urgent flag set.
     pub urgent: bool,
     pub representation: Option<String>,
+    /// The workspace orientation. It can be vertical, horizontal, or none
     #[serde(default)]
-    pub orientation: String,
+    pub orientation: Orientation,
     /// The bounds of the workspace. It consists of x, y, width, and height.
     pub rect: Rect,
     /// The name of the output that the workspace is on.
@@ -342,6 +343,15 @@ pub enum NodeLayout {
     Dockarea, // i3-specific
     #[default]
     None,
+}
+
+#[non_exhaustive]
+#[derive(Clone, Copy, Debug, PartialEq, Deserialize, Serialize, Default)]
+#[serde(rename_all = "lowercase")]
+pub enum Orientation {
+    Vertical,
+    Horizontal,
+    #[default]
     None,
 }
 
@@ -382,6 +392,8 @@ pub struct Node {
     /// The node's layout.  It can either be splith, splitv, stacked, tabbed, or
     /// output.
     pub layout: NodeLayout,
+    /// The node's orientation. It can be vertical, horizontal, or none
+    pub orientation: Orientation,
     /// The percentage of the node's parent that it takes up or null for the
     /// root and other special nodes such as the scratchpad.
     pub percent: Option<f64>,
