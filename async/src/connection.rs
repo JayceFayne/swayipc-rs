@@ -8,6 +8,8 @@ use std::io::ErrorKind::NotConnected;
 use std::os::unix::net::UnixStream;
 use std::time::Duration;
 
+const MAX_CONNECT_RETRIES: u8 = u8::MAX;
+
 #[derive(Debug)]
 pub struct Connection(Async<UnixStream>);
 
@@ -15,13 +17,19 @@ impl Connection {
     /// Creates a new async `Connection` to sway-ipc.
     pub async fn new() -> Fallible<Self> {
         let socketpath = get_socketpath().await?;
+        let mut retries = 0;
         loop {
-            let stream = Async::<UnixStream>::connect(socketpath.as_path()).await;
-            if matches!(stream.as_ref().map_err(|e| e.kind()), Err(NotConnected)) {
+            let connection = Async::<UnixStream>::connect(socketpath.as_path())
+                .await
+                .map(Self);
+            if matches!(connection.as_ref().map_err(|e| e.kind()), Err(NotConnected))
+                && retries != MAX_CONNECT_RETRIES
+            {
                 Timer::after(Duration::from_millis(100)).await;
             } else {
-                return Ok(Self(stream?));
+                return Ok(connection?);
             }
+            retries += 1;
         }
     }
 
