@@ -1,3 +1,4 @@
+use crate::utils::serde::skip_null_values;
 use serde::{Deserialize, Serialize};
 
 #[non_exhaustive]
@@ -229,7 +230,7 @@ pub struct Input {
     /// (Only keyboards) The name of the active keyboard layout in use.
     pub xkb_active_layout_name: Option<String>,
     /// (Only keyboards) A list a layout names configured for the keyboard.
-    #[serde(default)]
+    #[serde(default, deserialize_with = "skip_null_values")]
     pub xkb_layout_names: Vec<String>,
     /// (Only keyboards) The index of the active keyboard layout in use.
     pub xkb_active_layout_index: Option<i32>,
