@@ -1,6 +1,6 @@
 [package]
 name = "swayipc-types"
-version = "1.4.3"
+version = "2.0.0"
 authors = ["Jayce Fayne <jayce.fayne@mailbox.org>"]
 edition = "2024"
 description = "A library containing Type defintions from sway's IPC interface"
