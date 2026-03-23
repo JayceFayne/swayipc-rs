@@ -1,4 +1,4 @@
-use crate::{CommandType, Error::InvalidCommandType, Fallible};
+use crate::{CommandType, Error::InvalidCommandType, Fallible, utils::serde::deserialize_from_slice};
 use serde::de::DeserializeOwned as Deserialize;
 
 impl CommandType {
@@ -7,6 +7,6 @@ impl CommandType {
         if payload_type != command_type {
             return Err(InvalidCommandType(payload_type, command_type));
         }
-        Ok(serde_json::from_slice(&payload)?)
+        Ok(deserialize_from_slice(&payload)?)
     }
 }

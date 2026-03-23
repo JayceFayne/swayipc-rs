@@ -36,3 +36,9 @@ where
 {
     deserializer.deserialize_seq(SkipNullValues(std::marker::PhantomData))
 }
+
+pub fn deserialize_from_slice<'a, T: Deserialize<'a>>(payload: &'a [u8]) -> serde_json::Result<T> {
+    let mut deserializer = serde_json::Deserializer::from_slice(payload);
+    deserializer.disable_recursion_limit();
+    T::deserialize(&mut deserializer)
+}

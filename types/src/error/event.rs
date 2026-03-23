@@ -2,6 +2,7 @@ use crate::{
     Error::UnimplementedEvent,
     Event::{self, *},
     Fallible,
+    utils::serde::deserialize_from_slice,
 };
 
 impl Event {
@@ -10,16 +11,16 @@ impl Event {
         // since we dont convert to hex we also dont match on the (hex) values written in the sway-ipc docs!
         let event_type = (payload_type << 1) >> 1;
         Ok(match event_type {
-            0 => Workspace(serde_json::from_slice(&payload)?),
-            1 => Output(serde_json::from_slice(&payload)?),
-            2 => Mode(serde_json::from_slice(&payload)?),
-            3 => Window(serde_json::from_slice(&payload)?),
-            4 => BarConfigUpdate(serde_json::from_slice(&payload)?),
-            5 => Binding(serde_json::from_slice(&payload)?),
-            6 => Shutdown(serde_json::from_slice(&payload)?),
-            7 => Tick(serde_json::from_slice(&payload)?),
-            20 => BarStateUpdate(serde_json::from_slice(&payload)?),
-            21 => Input(serde_json::from_slice(&payload)?),
+            0 => Workspace(deserialize_from_slice(&payload)?),
+            1 => Output(deserialize_from_slice(&payload)?),
+            2 => Mode(deserialize_from_slice(&payload)?),
+            3 => Window(deserialize_from_slice(&payload)?),
+            4 => BarConfigUpdate(deserialize_from_slice(&payload)?),
+            5 => Binding(deserialize_from_slice(&payload)?),
+            6 => Shutdown(deserialize_from_slice(&payload)?),
+            7 => Tick(deserialize_from_slice(&payload)?),
+            20 => BarStateUpdate(deserialize_from_slice(&payload)?),
+            21 => Input(deserialize_from_slice(&payload)?),
             _ => return Err(UnimplementedEvent(event_type, payload)),
         })
     }
