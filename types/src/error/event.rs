@@ -2,14 +2,8 @@ use crate::{
     Error::UnimplementedEvent,
     Event::{self, *},
     Fallible,
+    utils::serde::deserialize_from_slice,
 };
-use serde::Deserialize;
-
-fn deserialize_from_slice<'a, T: Deserialize<'a>>(payload: &'a [u8]) -> serde_json::Result<T> {
-    let mut deserializer = serde_json::Deserializer::from_slice(payload);
-    deserializer.disable_recursion_limit();
-    T::deserialize(&mut deserializer)
-}
 
 impl Event {
     pub fn decode((payload_type, payload): (u32, Vec<u8>)) -> Fallible<Self> {
