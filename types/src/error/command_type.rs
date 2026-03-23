@@ -7,6 +7,8 @@ impl CommandType {
         if payload_type != command_type {
             return Err(InvalidCommandType(payload_type, command_type));
         }
-        Ok(serde_json::from_slice(&payload)?)
+        let mut deserializer = serde_json::Deserializer::from_slice(&payload);
+        deserializer.disable_recursion_limit();
+        Ok(serde::Deserialize::deserialize(&mut deserializer)?)
     }
 }

@@ -12,7 +12,7 @@ readme = "README.md"
 
 [dependencies]
 serde = { version = "1", features = ["derive"] }
-serde_json = "1"
+serde_json = { version = "1", features = ["unbounded_depth"] }
 thiserror = { version = "2", optional = true }
 
 [features]
