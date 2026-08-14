@@ -336,7 +336,9 @@ pub enum NodeBorder {
 #[derive(Clone, Copy, Debug, PartialEq, Deserialize, Serialize, Default)]
 #[serde(rename_all = "lowercase")]
 pub enum NodeLayout {
+    #[serde(alias = "horizontal")]
     SplitH,
+    #[serde(alias = "vertical")]
     SplitV,
     Stacked,
     Tabbed,
@@ -344,6 +346,23 @@ pub enum NodeLayout {
     Dockarea, // i3-specific
     #[default]
     None,
+}
+
+#[cfg(test)]
+mod tests {
+    use super::NodeLayout;
+
+    #[test]
+    fn node_layout_accepts_orientation_names() {
+        assert_eq!(
+            serde_json::from_str::<NodeLayout>(r#""horizontal""#).unwrap(),
+            NodeLayout::SplitH
+        );
+        assert_eq!(
+            serde_json::from_str::<NodeLayout>(r#""vertical""#).unwrap(),
+            NodeLayout::SplitV
+        );
+    }
 }
 
 #[non_exhaustive]
